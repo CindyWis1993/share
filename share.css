@@ -1,0 +1,524 @@
+p {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+pre {
+    margin: 0;  
+}
+input {
+    font-size: 14px;
+}
+img {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+}
+.language-html {
+    font-family: "Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";
+}
+.lineMain {
+    margin-bottom: 50px;
+    padding: 30px;
+}
+.lineCon {
+    box-sizing: border-box;
+    position: relative;
+    height: 121px;
+    width: 320px;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+    color: #999;
+}
+.centerCon {
+    position: absolute;
+    left: 100px;
+    height: 120px;
+    width: 120px;
+    border-right: 1px solid #333;
+    border-left: 1px solid #333;
+}
+.lineCon i {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+}
+.straightLineCon .point-1 {
+    top: 0;
+    left: 0;
+}
+.straightLineCon .point-2 {
+    top: 0;
+    left: 100px;
+}
+.straightLineCon .point-3 {
+    top: 100px;
+    left: 220px;
+}
+.straightLineCon .point-4 {
+    top: 100px;
+    left: 320px;
+}
+.straightLine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5e4d;
+    animation: straightLine 2s alternate infinite;
+}
+.rotateLineCon {
+    display: inline-block;
+    margin-top: 30px;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    margin-right: 60px;
+    line-height: 140px;
+    text-align: center;
+}
+.rotateBox-1 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ff5e4d;
+    animation: rotateLine1 2s linear infinite;
+}
+.rotateBox-2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ff5e4d;
+    animation: rotateLine2 2s linear infinite;
+}
+.rotateLine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5e4d;
+}
+.moveLineCon {
+    display: inline-block;
+    margin-top: 30px;
+    width: 120px;
+    height: 120px;
+    margin-right: 60px;
+    border: 1px solid #333;
+    line-height: 120px;
+    text-align: center;
+}
+.moveLine-1,
+.moveLine-2,
+.moveLine-main,
+.moveLine-test,
+.moveLine-X,
+.moveLine-Y {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #333;
+    line-height: 1;
+}
+.moveLine-1,
+.moveLine-main {
+    animation: moveLineX 2.5s infinite ease-in;
+}
+.moveLine-2 {
+    animation: moveLineY 2.5s infinite ease-out;
+}
+.moveLine-main {
+    background: #333;
+}
+.moveLine-main::after {
+    line-height: 1;
+    display: block;
+    content: 'after';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5e4d;
+    color: #333;
+    animation: moveLineY 2.5s infinite ease-out;
+}
+.moveLine-after {
+    line-height: 1;
+    display: block;
+    content: 'after';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5e4d;
+    color: #333;
+}
+.DJLine::after {
+    display: block;
+    content: '';
+    border-top: 1px solid #999;
+    position: absolute;
+    top: 0;
+    transform-origin: 0;
+    transform: rotate(45deg);
+    width: 167px;
+    left: 0;
+}
+#arrow {
+    position: absolute;
+    left: -50px;
+    top: -20px;
+    width: 100px;
+}
+@keyframes straightLine {
+    0% { transform: translate(0, 0); }
+    30% { transform: translate(100px, 0); }
+    60% { transform: translate(200px, 100px); }
+    100% { transform: translate(300px, 100px); }
+}
+@keyframes rotateLine1 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes rotateLine2 {
+    0% { transform: rotate(135deg); }
+    50% { transform: rotate(315deg); }
+    100% { transform: rotate(135deg); }
+}
+@keyframes moveLineX {
+  50% {
+    animation-timing-function: ease-in;
+    transform: translateX(100px);
+  }
+}
+@keyframes moveLineY {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(100px);
+  }
+}
+.autoCon {
+    display: inline-block;
+    width: 500px;
+    height: 310px;
+    margin-left: 20px;
+    position: relative;
+    background: #272822;
+    overflow: hidden;
+}
+.coordpath {
+    display: inline-block;
+    width: 500px;
+    height: 310px;
+}
+.coordpath-simple {
+    left: 0 !important;
+    top: 310px !important;
+    -webkit-animation: coordpath-simple 2000ms steps(1) 0ms infinite normal;
+}
+.coordpath-dif {
+    width: 50px;
+    height: 50px;
+    background: url('./fish.png');
+    background-size: 100%;
+    left: 0 !important;
+    top: 310px !important;
+    -webkit-animation: coordpath-dif 8000ms steps(1) 0ms infinite normal;
+}
+/* @-webkit-keyframes coordpath-simple{0.0000%{-webkit-transform:translate(33px,-37px) translate(-50%,-50%)}
+0.7143%{-webkit-transform:translate(42.963475218658914px,-34.51374453352764px) translate(-50%,-50%)}
+1.4286%{-webkit-transform:translate(52.58596501457731px,-32.19628279883375px) translate(-50%,-50%)}
+2.1429%{-webkit-transform:translate(61.872708454810436px,-30.045286078717254px) translate(-50%,-50%)}
+2.8571%{-webkit-transform:translate(70.82894460641398px,-28.058425655976635px) translate(-50%,-50%)}
+3.5714%{-webkit-transform:translate(79.4599125364432px,-26.23337281341105px) translate(-50%,-50%)}
+4.2857%{-webkit-transform:translate(87.77085131195349px,-24.56779883381921px) translate(-50%,-50%)}
+5.0000%{-webkit-transform:translate(95.76700000000005px,-23.059375000000045px) translate(-50%,-50%)}
+5.7143%{-webkit-transform:translate(103.4535976676384px,-21.705772594752375px) translate(-50%,-50%)}
+6.4286%{-webkit-transform:translate(110.83588338192408px,-20.504662900874678px) translate(-50%,-50%)}
+7.1429%{-webkit-transform:translate(117.91909620991248px,-19.453717201166114px) translate(-50%,-50%)}
+7.8571%{-webkit-transform:translate(124.70847521865903px,-18.550606778425617px) translate(-50%,-50%)}
+8.5714%{-webkit-transform:translate(131.2092594752187px,-17.793002915451893px) translate(-50%,-50%)}
+9.2857%{-webkit-transform:translate(137.4266880466473px,-17.17857689504376px) translate(-50%,-50%)}
+10.0000%{-webkit-transform:translate(143.36599999999999px,-16.704999999999927px) translate(-50%,-50%)}
+10.7143%{-webkit-transform:translate(149.03243440233234px,-16.369943513119324px) translate(-50%,-50%)}
+11.4286%{-webkit-transform:translate(154.43123032069957px,-16.171078717201226px) translate(-50%,-50%)}
+12.1429%{-webkit-transform:translate(159.56762682215742px,-16.106076895043884px) translate(-50%,-50%)}
+12.8571%{-webkit-transform:translate(164.44686297376086px,-16.172609329446004px) translate(-50%,-50%)}
+13.5714%{-webkit-transform:translate(169.07417784256563px,-16.36834730320686px) translate(-50%,-50%)}
+14.2857%{-webkit-transform:translate(173.45481049562693px,-16.69096209912516px) translate(-50%,-50%)}
+15.0000%{-webkit-transform:translate(177.59399999999994px,-17.13812500000006px) translate(-50%,-50%)}
+15.7143%{-webkit-transform:translate(181.4969854227404px,-17.7075072886297px) translate(-50%,-50%)}
+16.4286%{-webkit-transform:translate(185.16900583090387px,-18.396780247813354px) translate(-50%,-50%)}
+17.1429%{-webkit-transform:translate(188.61530029154517px,-19.203615160349955px) translate(-50%,-50%)}
+17.8571%{-webkit-transform:translate(191.84110787172006px,-20.125683309038095px) translate(-50%,-50%)}
+18.5714%{-webkit-transform:translate(194.85166763848395px,-21.160655976676367px) translate(-50%,-50%)}
+19.2857%{-webkit-transform:translate(197.65221865889214px,-22.306204446064044px) translate(-50%,-50%)}
+20.0000%{-webkit-transform:translate(200.24800000000016px,-23.559999999999945px) translate(-50%,-50%)}
+20.7143%{-webkit-transform:translate(202.64425072886286px,-24.91971392128289px) translate(-50%,-50%)}
+21.4286%{-webkit-transform:translate(204.84620991253632px,-26.38301749271136px) translate(-50%,-50%)}
+22.1429%{-webkit-transform:translate(206.85911661807586px,-27.947581997084626px) translate(-50%,-50%)}
+22.8571%{-webkit-transform:translate(208.68820991253654px,-29.61107871720128px) translate(-50%,-50%)}
+23.5714%{-webkit-transform:translate(210.33872886297377px,-31.371178935860144px) translate(-50%,-50%)}
+24.2857%{-webkit-transform:translate(211.81591253644308px,-33.225553935860034px) translate(-50%,-50%)}
+25.0000%{-webkit-transform:translate(213.125px,-35.171875px) translate(-50%,-50%)}
+25.7143%{-webkit-transform:translate(214.27123032069971px,-37.207813411078746px) translate(-50%,-50%)}
+26.4286%{-webkit-transform:translate(215.25984256559775px,-39.331040451894864px) translate(-50%,-50%)}
+27.1429%{-webkit-transform:translate(216.0960758017494px,-41.53922740524774px) translate(-50%,-50%)}
+27.8571%{-webkit-transform:translate(216.78516909620987px,-43.83004555393586px) translate(-50%,-50%)}
+28.5714%{-webkit-transform:translate(217.3323615160349px,-46.20116618075804px) translate(-50%,-50%)}
+29.2857%{-webkit-transform:translate(217.74289212827978px,-48.65026056851332px) translate(-50%,-50%)}
+30.0000%{-webkit-transform:translate(218.02199999999982px,-51.17500000000007px) translate(-50%,-50%)}
+30.7143%{-webkit-transform:translate(218.17492419825066px,-53.77305575801756px) translate(-50%,-50%)}
+31.4286%{-webkit-transform:translate(218.20690379008738px,-56.44209912536439px) translate(-50%,-50%)}
+32.1429%{-webkit-transform:translate(218.12317784256572px,-59.17980138483961px) translate(-50%,-50%)}
+32.8571%{-webkit-transform:translate(217.92898542274054px,-61.983833819241795px) translate(-50%,-50%)}
+33.5714%{-webkit-transform:translate(217.6295655976677px,-64.85186771137012px) translate(-50%,-50%)}
+34.2857%{-webkit-transform:translate(217.23015743440226px,-67.78157434402328px) translate(-50%,-50%)}
+35.0000%{-webkit-transform:translate(216.736px,-70.77062500000011px) translate(-50%,-50%)}
+35.7143%{-webkit-transform:translate(216.15233236151585px,-73.81669096209919px) translate(-50%,-50%)}
+36.4286%{-webkit-transform:translate(215.48439358600558px,-76.91744351311957px) translate(-50%,-50%)}
+37.1429%{-webkit-transform:translate(214.73742274052483px,-80.07055393586006px) translate(-50%,-50%)}
+37.8571%{-webkit-transform:translate(213.91665889212845px,-83.2736935131195px) translate(-50%,-50%)}
+38.5714%{-webkit-transform:translate(213.02734110787173px,-86.52453352769669px) translate(-50%,-50%)}
+39.2857%{-webkit-transform:translate(212.07470845481066px,-89.82074526239046px) translate(-50%,-50%)}
+40.0000%{-webkit-transform:translate(211.06400000000008px,-93.15999999999997px) translate(-50%,-50%)}
+40.7143%{-webkit-transform:translate(210.00045481049563px,-96.53996902332358px) translate(-50%,-50%)}
+41.4286%{-webkit-transform:translate(208.88931195335272px,-99.95832361516045px) translate(-50%,-50%)}
+42.1429%{-webkit-transform:translate(207.73581049562665px,-103.41273505830918px) translate(-50%,-50%)}
+42.8571%{-webkit-transform:translate(206.54518950437307px,-106.90087463556858px) translate(-50%,-50%)}
+43.5714%{-webkit-transform:translate(205.32268804664727px,-110.4204136297376px) translate(-50%,-50%)}
+44.2857%{-webkit-transform:translate(204.07354518950433px,-113.96902332361515px) translate(-50%,-50%)}
+45.0000%{-webkit-transform:translate(202.8030000000001px,-117.54437499999995px) translate(-50%,-50%)}
+45.7143%{-webkit-transform:translate(201.5162915451897px,-121.14413994169081px) translate(-50%,-50%)}
+46.4286%{-webkit-transform:translate(200.21865889212836px,-124.7659894314869px) translate(-50%,-50%)}
+47.1429%{-webkit-transform:translate(198.91534110787165px,-128.40759475218653px) translate(-50%,-50%)}
+47.8571%{-webkit-transform:translate(197.6115772594751px,-132.06662718658902px) translate(-50%,-50%)}
+48.5714%{-webkit-transform:translate(196.3126064139941px,-135.7407580174928px) translate(-50%,-50%)}
+49.2857%{-webkit-transform:translate(195.02366763848397px,-139.4276585276968px) translate(-50%,-50%)}
+50.0000%{-webkit-transform:translate(193.75px,-143.125px) translate(-50%,-50%)}
+50.7143%{-webkit-transform:translate(192.49684256559772px,-146.83045371720107px) translate(-50%,-50%)}
+51.4286%{-webkit-transform:translate(191.2694344023323px,-150.5416909620991px) translate(-50%,-50%)}
+52.1429%{-webkit-transform:translate(190.0730145772594px,-154.25638301749274px) translate(-50%,-50%)}
+52.8571%{-webkit-transform:translate(188.91282215743445px,-157.9722011661808px) translate(-50%,-50%)}
+53.5714%{-webkit-transform:translate(187.7940962099126px,-161.68681669096208px) translate(-50%,-50%)}
+54.2857%{-webkit-transform:translate(186.72207580174927px,-165.39790087463552px) translate(-50%,-50%)}
+55.0000%{-webkit-transform:translate(185.702px,-169.10312500000003px) translate(-50%,-50%)}
+55.7143%{-webkit-transform:translate(184.73910787172008px,-172.8001603498542px) translate(-50%,-50%)}
+56.4286%{-webkit-transform:translate(183.83863848396504px,-176.48667820699706px) translate(-50%,-50%)}
+57.1429%{-webkit-transform:translate(183.00583090379007px,-180.16034985422738px) translate(-50%,-50%)}
+57.8571%{-webkit-transform:translate(182.2459241982507px,-183.81884657434404px) translate(-50%,-50%)}
+58.5714%{-webkit-transform:translate(181.56415743440232px,-187.4598396501458px) translate(-50%,-50%)}
+59.2857%{-webkit-transform:translate(180.96576967930025px,-191.08100036443153px) translate(-50%,-50%)}
+60.0000%{-webkit-transform:translate(180.45600000000002px,-194.67999999999995px) translate(-50%,-50%)}
+60.7143%{-webkit-transform:translate(180.0400874635568px,-198.25450983965015px) translate(-50%,-50%)}
+61.4286%{-webkit-transform:translate(179.72327113702613px,-201.80220116618074px) translate(-50%,-50%)}
+62.1429%{-webkit-transform:translate(179.51079008746353px,-205.3207452623907px) translate(-50%,-50%)}
+62.8571%{-webkit-transform:translate(179.4078833819242px,-208.8078134110787px) translate(-50%,-50%)}
+63.5714%{-webkit-transform:translate(179.41979008746353px,-212.26107689504374px) translate(-50%,-50%)}
+64.2857%{-webkit-transform:translate(179.55174927113706px,-215.67820699708454px) translate(-50%,-50%)}
+65.0000%{-webkit-transform:translate(179.80899999999997px,-219.05687500000005px) translate(-50%,-50%)}
+65.7143%{-webkit-transform:translate(180.1967813411079px,-222.39475218658896px) translate(-50%,-50%)}
+66.4286%{-webkit-transform:translate(180.72033236151606px,-225.6895098396501px) translate(-50%,-50%)}
+67.1429%{-webkit-transform:translate(181.38489212827994px,-228.93881924198251px) translate(-50%,-50%)}
+67.8571%{-webkit-transform:translate(182.19569970845487px,-232.1403516763848px) translate(-50%,-50%)}
+68.5714%{-webkit-transform:translate(183.15799416909636px,-235.291778425656px) translate(-50%,-50%)}
+69.2857%{-webkit-transform:translate(184.27701457725937px,-238.39077077259475px) translate(-50%,-50%)}
+70.0000%{-webkit-transform:translate(185.558px,-241.435px) translate(-50%,-50%)}
+70.7143%{-webkit-transform:translate(187.0061895043732px,-244.42213739067063px) translate(-50%,-50%)}
+71.4286%{-webkit-transform:translate(188.6268221574344px,-247.34985422740522px) translate(-50%,-50%)}
+72.1429%{-webkit-transform:translate(190.4251370262391px,-250.21582179300287px) translate(-50%,-50%)}
+72.8571%{-webkit-transform:translate(192.40637317784262px,-253.01771137026236px) translate(-50%,-50%)}
+73.5714%{-webkit-transform:translate(194.57576967930027px,-255.7531942419825px) translate(-50%,-50%)}
+74.2857%{-webkit-transform:translate(196.93856559766778px,-258.4199416909621px) translate(-50%,-50%)}
+75.0000%{-webkit-transform:translate(199.5px,-261.015625px) translate(-50%,-50%)}
+75.7143%{-webkit-transform:translate(202.2653119533527px,-263.537915451895px) translate(-50%,-50%)}
+76.4286%{-webkit-transform:translate(205.23974052478138px,-265.98448432944605px) translate(-50%,-50%)}
+77.1429%{-webkit-transform:translate(208.42852478134114px,-268.35300291545195px) translate(-50%,-50%)}
+77.8571%{-webkit-transform:translate(211.8369037900875px,-270.64114249271137px) translate(-50%,-50%)}
+78.5714%{-webkit-transform:translate(215.47011661807574px,-272.8465743440233px) translate(-50%,-50%)}
+79.2857%{-webkit-transform:translate(219.3334023323614px,-274.96696975218657px) translate(-50%,-50%)}
+80.0000%{-webkit-transform:translate(223.43200000000002px,-277px) translate(-50%,-50%)}
+80.7143%{-webkit-transform:translate(227.77114868804665px,-278.9433363702624px) translate(-50%,-50%)}
+81.4286%{-webkit-transform:translate(232.35608746355672px,-280.7946501457726px) translate(-50%,-50%)}
+82.1429%{-webkit-transform:translate(237.1920553935861px,-282.5516126093295px) translate(-50%,-50%)}
+82.8571%{-webkit-transform:translate(242.2842915451895px,-284.2118950437318px) translate(-50%,-50%)}
+83.5714%{-webkit-transform:translate(247.6380349854228px,-285.77316873177847px) translate(-50%,-50%)}
+84.2857%{-webkit-transform:translate(253.25852478134118px,-287.2331049562682px) translate(-50%,-50%)}
+85.0000%{-webkit-transform:translate(259.15099999999995px,-288.589375px) translate(-50%,-50%)}
+85.7143%{-webkit-transform:translate(265.32069970845487px,-289.83965014577257px) translate(-50%,-50%)}
+86.4286%{-webkit-transform:translate(271.7728629737609px,-290.98160167638486px) translate(-50%,-50%)}
+87.1429%{-webkit-transform:translate(278.51272886297374px,-292.0129008746356px) translate(-50%,-50%)}
+87.8571%{-webkit-transform:translate(285.54553644314876px,-292.93121902332365px) translate(-50%,-50%)}
+88.5714%{-webkit-transform:translate(292.876524781341px,-293.7342274052478px) translate(-50%,-50%)}
+89.2857%{-webkit-transform:translate(300.51093294460634px,-294.419597303207px) translate(-50%,-50%)}
+90.0000%{-webkit-transform:translate(308.45400000000006px,-294.985px) translate(-50%,-50%)}
+90.7143%{-webkit-transform:translate(316.71096501457725px,-295.4281067784256px) translate(-50%,-50%)}
+91.4286%{-webkit-transform:translate(325.28706705539355px,-295.74658892128275px) translate(-50%,-50%)}
+92.1429%{-webkit-transform:translate(334.18754518950425px,-295.9381177113703px) translate(-50%,-50%)}
+92.8571%{-webkit-transform:translate(343.417638483965px,-296.00036443148684px) translate(-50%,-50%)}
+93.5714%{-webkit-transform:translate(352.98258600583097px,-295.9310003644315px) translate(-50%,-50%)}
+94.2857%{-webkit-transform:translate(362.88762682215736px,-295.7276967930029px) translate(-50%,-50%)}
+95.0000%{-webkit-transform:translate(373.1379999999999px,-295.38812500000006px) translate(-50%,-50%)}
+95.7143%{-webkit-transform:translate(383.73894460641395px,-294.9099562682216px) translate(-50%,-50%)}
+96.4286%{-webkit-transform:translate(394.69569970845487px,-294.29086188046654px) translate(-50%,-50%)}
+97.1429%{-webkit-transform:translate(406.01350437317785px,-293.5285131195335px) translate(-50%,-50%)}
+97.8571%{-webkit-transform:translate(417.69759766763843px,-292.6205812682216px) translate(-50%,-50%)}
+98.5714%{-webkit-transform:translate(429.75321865889214px,-291.56473760932937px) translate(-50%,-50%)}
+99.2857%{-webkit-transform:translate(442.18560641399426px,-290.358653425656px) translate(-50%,-50%)}
+100.0000%{-webkit-transform:translate(455px,-289px) translate(-50%,-50%)}
+} */
+@-webkit-keyframes coordpath-dif {
+0.0000%{-webkit-transform:translate(15px,-16px) translate(-50%,-50%)}
+0.7143%{-webkit-transform:translate(15.769491398587093px,-16.04583808102609px) translate(-50%,-50%)}
+1.4286%{-webkit-transform:translate(17.933660503841224px,-16.26276043256803px) translate(-50%,-50%)}
+2.1429%{-webkit-transform:translate(21.276049680000938px,-16.769879217321204px) translate(-50%,-50%)}
+2.8571%{-webkit-transform:translate(25.58020129130432px,-17.686306597981456px) translate(-50%,-50%)}
+3.5714%{-webkit-transform:translate(30.629657701990368px,-19.13115473724406px) translate(-50%,-50%)}
+4.2857%{-webkit-transform:translate(36.2079612762974px,-21.223535797804743px) translate(-50%,-50%)}
+5.0000%{-webkit-transform:translate(42.09865437846429px,-24.082561942358893px) translate(-50%,-50%)}
+5.7143%{-webkit-transform:translate(48.08527937272902px,-27.827345333602352px) translate(-50%,-50%)}
+6.4286%{-webkit-transform:translate(53.95137862333081px,-32.57699813423028px) translate(-50%,-50%)}
+7.1429%{-webkit-transform:translate(59.48049449450741px,-38.45063250693852px) translate(-50%,-50%)}
+7.8571%{-webkit-transform:translate(64.45616935049793px,-45.567360614422455px) translate(-50%,-50%)}
+8.5714%{-webkit-transform:translate(68.6619455555408px,-54.046294619377704px) translate(-50%,-50%)}
+9.2857%{-webkit-transform:translate(71.88136547387455px,-64.00654668449988px) translate(-50%,-50%)}
+10.0000%{-webkit-transform:translate(73.89797146973774px,-75.56722897248437px) translate(-50%,-50%)}
+10.7143%{-webkit-transform:translate(74.4953059073689px,-88.8474536460269px) translate(-50%,-50%)}
+11.4286%{-webkit-transform:translate(73.45691115100647px,-103.96633286782298px) translate(-50%,-50%)}
+12.1429%{-webkit-transform:translate(70.5663295648892px,-121.04297880056811px) translate(-50%,-50%)}
+12.8571%{-webkit-transform:translate(65.60710351325531px,-140.19650360695778px) translate(-50%,-50%)}
+13.5714%{-webkit-transform:translate(58.362775360343676px,-161.54601944968772px) translate(-50%,-50%)}
+14.2857%{-webkit-transform:translate(48.61688747039261px,-185.21063849145338px) translate(-50%,-50%)}
+15.0000%{-webkit-transform:translate(36.15298220764089px,-211.3094728949502px) translate(-50%,-50%)}
+15.7143%{-webkit-transform:translate(22.816589061743457px,-234.6783762765972px) translate(-50%,-50%)}
+16.4286%{-webkit-transform:translate(13.629027212974393px,-251.08359233313183px) translate(-50%,-50%)}
+17.1429%{-webkit-transform:translate(8.087511871894094px,-264.339688964013px) translate(-50%,-50%)}
+17.8571%{-webkit-transform:translate(5.932916287334365px,-274.7057929204087px) translate(-50%,-50%)}
+18.5714%{-webkit-transform:translate(6.906113708127236px,-282.44103095348726px) translate(-50%,-50%)}
+19.2857%{-webkit-transform:translate(10.747977383104512px,-287.8045298144165px) translate(-50%,-50%)}
+20.0000%{-webkit-transform:translate(17.199380561098224px,-291.0554162543646px) translate(-50%,-50%)}
+20.7143%{-webkit-transform:translate(26.001196490940174px,-292.4528170244996px) translate(-50%,-50%)}
+21.4286%{-webkit-transform:translate(36.894298421462395px,-292.2558588759896px) translate(-50%,-50%)}
+22.1429%{-webkit-transform:translate(49.6195596014968px,-290.72366856000264px) translate(-50%,-50%)}
+22.8571%{-webkit-transform:translate(59.036994503089204px,-289.1710464079886px) translate(-50%,-50%)}
+23.5714%{-webkit-transform:translate(67.23874537414565px,-287.861613353891px) translate(-50%,-50%)}
+24.2857%{-webkit-transform:translate(76.23313219190584px,-286.3615962829355px) translate(-50%,-50%)}
+25.0000%{-webkit-transform:translate(85.8133191745469px,-284.5841388881648px) translate(-50%,-50%)}
+25.7143%{-webkit-transform:translate(95.7724705402469px,-282.4423848626211px) translate(-50%,-50%)}
+26.4286%{-webkit-transform:translate(105.90375050718285px,-279.84947789934716px) translate(-50%,-50%)}
+27.1429%{-webkit-transform:translate(116.00032329353223px,-276.71856169138556px) translate(-50%,-50%)}
+27.8571%{-webkit-transform:translate(125.85535311747276px,-272.9627799317786px) translate(-50%,-50%)}
+28.5714%{-webkit-transform:translate(135.2620041971819px,-268.4952763135691px) translate(-50%,-50%)}
+29.2857%{-webkit-transform:translate(144.01344075083773px,-263.22919452979914px) translate(-50%,-50%)}
+30.0000%{-webkit-transform:translate(151.9028269966168px,-257.0776782735117px) translate(-50%,-50%)}
+30.7143%{-webkit-transform:translate(158.72332715269738px,-249.95387123774896px) translate(-50%,-50%)}
+31.4286%{-webkit-transform:translate(164.26810543725674px,-241.7709171155537px) translate(-50%,-50%)}
+32.1429%{-webkit-transform:translate(168.33032606847223px,-232.4419595999682px) translate(-50%,-50%)}
+32.8571%{-webkit-transform:translate(170.7031532645217px,-221.88014238403525px) translate(-50%,-50%)}
+33.5714%{-webkit-transform:translate(171.1797512435826px,-209.99860916079717px) translate(-50%,-50%)}
+34.2857%{-webkit-transform:translate(169.5532842238323px,-196.7105036232964px) translate(-50%,-50%)}
+35.0000%{-webkit-transform:translate(165.6169164234484px,-181.92896946457574px) translate(-50%,-50%)}
+35.7143%{-webkit-transform:translate(159.16381206060873px,-165.56715037767742px) translate(-50%,-50%)}
+36.4286%{-webkit-transform:translate(149.9871353534902px,-147.53819005564435px) translate(-50%,-50%)}
+37.1429%{-webkit-transform:translate(136.1614895310887px,-127.58867107063321px) translate(-50%,-50%)}
+37.8571%{-webkit-transform:translate(123.93247414828329px,-113.57446291811266px) translate(-50%,-50%)}
+38.5714%{-webkit-transform:translate(115.85957376205488px,-106.6535202459404px) translate(-50%,-50%)}
+39.2857%{-webkit-transform:translate(111.34440851629779px,-105.40589342773058px) translate(-50%,-50%)}
+40.0000%{-webkit-transform:translate(109.78859855490623px,-108.41163283709693px) translate(-50%,-50%)}
+40.7143%{-webkit-transform:translate(110.59376402177452px,-114.25078884765378px) translate(-50%,-50%)}
+41.4286%{-webkit-transform:translate(113.16152506079641px,-121.5034118330152px) translate(-50%,-50%)}
+42.1429%{-webkit-transform:translate(116.8935018158669px,-128.74955216679484px) translate(-50%,-50%)}
+42.8571%{-webkit-transform:translate(121.19131443087974px,-134.569260222607px) translate(-50%,-50%)}
+43.5714%{-webkit-transform:translate(125.45658304972949px,-137.54258637406565px) translate(-50%,-50%)}
+44.2857%{-webkit-transform:translate(129.0909278163101px,-136.24958099478476px) translate(-50%,-50%)}
+45.0000%{-webkit-transform:translate(131.49596887451617px,-129.27029445837837px) translate(-50%,-50%)}
+45.7143%{-webkit-transform:translate(132.07332636824162px,-115.1847771384605px) translate(-50%,-50%)}
+46.4286%{-webkit-transform:translate(130.22462044138058px,-92.57307940864507px) translate(-50%,-50%)}
+47.1429%{-webkit-transform:translate(125.35147123782792px,-60.015251642546446px) translate(-50%,-50%)}
+47.8571%{-webkit-transform:translate(126.9419912342911px,-51.549500101309604px) translate(-50%,-50%)}
+48.5714%{-webkit-transform:translate(131.36417676328892px,-45.3657774433708px) translate(-50%,-50%)}
+49.2857%{-webkit-transform:translate(137.98399141371294px,-39.81666895603553px) translate(-50%,-50%)}
+50.0000%{-webkit-transform:translate(146.55836034807953px,-34.894774234415536px) translate(-50%,-50%)}
+50.7143%{-webkit-transform:translate(156.84420872890485px,-30.59269287362281px) translate(-50%,-50%)}
+51.4286%{-webkit-transform:translate(168.59846171870515px,-26.90302446876865px) translate(-50%,-50%)}
+52.1429%{-webkit-transform:translate(181.57804447999752px,-23.818368614964925px) translate(-50%,-50%)}
+52.8571%{-webkit-transform:translate(195.5398821752973px,-21.331324907323733px) translate(-50%,-50%)}
+53.5714%{-webkit-transform:translate(210.2408999671211px,-19.43449294095626px) translate(-50%,-50%)}
+54.2857%{-webkit-transform:translate(225.4380230179853px,-18.12047231097472px) translate(-50%,-50%)}
+55.0000%{-webkit-transform:translate(240.88817649040675px,-17.381862612490522px) translate(-50%,-50%)}
+55.7143%{-webkit-transform:translate(256.34828554690034px,-17.211263440615653px) translate(-50%,-50%)}
+56.4286%{-webkit-transform:translate(271.5752753499835px,-17.601274390461754px) translate(-50%,-50%)}
+57.1429%{-webkit-transform:translate(286.32607106217233px,-18.544495057140466px) translate(-50%,-50%)}
+57.8571%{-webkit-transform:translate(300.35759784598326px,-20.033525035763546px) translate(-50%,-50%)}
+58.5714%{-webkit-transform:translate(313.4267808639322px,-22.060963921442863px) translate(-50%,-50%)}
+59.2857%{-webkit-transform:translate(325.29054527853566px,-24.619411309289944px) translate(-50%,-50%)}
+60.0000%{-webkit-transform:translate(335.7058162523101px,-27.701466794416774px) translate(-50%,-50%)}
+60.7143%{-webkit-transform:translate(344.4295189477716px,-31.299729971934994px) translate(-50%,-50%)}
+61.4286%{-webkit-transform:translate(351.21857852743665px,-35.40680043695647px) translate(-50%,-50%)}
+62.1429%{-webkit-transform:translate(355.8299201538214px,-40.01527778459251px) translate(-50%,-50%)}
+62.8571%{-webkit-transform:translate(358.0533436829403px,-45.261684788107914px) translate(-50%,-50%)}
+63.5714%{-webkit-transform:translate(359.00517278789084px,-56.8737903596558px) translate(-50%,-50%)}
+64.2857%{-webkit-transform:translate(357.30887368922504px,-67.9934786110349px) translate(-50%,-50%)}
+65.0000%{-webkit-transform:translate(353.29710832391993px,-78.63891211926386px) translate(-50%,-50%)}
+65.7143%{-webkit-transform:translate(347.30253862895484px,-88.82825346136178px) translate(-50%,-50%)}
+66.4286%{-webkit-transform:translate(339.6578265413077px,-98.57966521434764px) translate(-50%,-50%)}
+67.1429%{-webkit-transform:translate(330.6956339979572px,-107.9113099552402px) translate(-50%,-50%)}
+67.8571%{-webkit-transform:translate(320.7486229358809px,-116.841350261059px) translate(-50%,-50%)}
+68.5714%{-webkit-transform:translate(310.14945529205795px,-125.38794870882214px) translate(-50%,-50%)}
+69.2857%{-webkit-transform:translate(299.23079300346626px,-133.56926787554903px) translate(-50%,-50%)}
+70.0000%{-webkit-transform:translate(288.3252980070839px,-141.4034703382584px) translate(-50%,-50%)}
+70.7143%{-webkit-transform:translate(277.76563223988956px,-148.90871867396942px) translate(-50%,-50%)}
+71.4286%{-webkit-transform:translate(267.8844576388615px,-156.103175459701px) translate(-50%,-50%)}
+72.1429%{-webkit-transform:translate(259.0144361409783px,-163.00500327247164px) translate(-50%,-50%)}
+72.8571%{-webkit-transform:translate(251.48822968321815px,-169.63236468930063px) translate(-50%,-50%)}
+73.5714%{-webkit-transform:translate(245.63850020255882px,-176.003422287207px) translate(-50%,-50%)}
+74.2857%{-webkit-transform:translate(241.79790963597952px,-182.1363386432094px) translate(-50%,-50%)}
+75.0000%{-webkit-transform:translate(240.299119920458px,-188.04927633432698px) translate(-50%,-50%)}
+75.7143%{-webkit-transform:translate(241.47479299297265px,-193.76039793757843px) translate(-50%,-50%)}
+76.4286%{-webkit-transform:translate(245.657590790502px,-199.28786602998298px) translate(-50%,-50%)}
+77.1429%{-webkit-transform:translate(253.18017525002438px,-204.64984318855943px) translate(-50%,-50%)}
+77.8571%{-webkit-transform:translate(264.3752083085176px,-209.86449199032666px) translate(-50%,-50%)}
+78.5714%{-webkit-transform:translate(279.5753519029606px,-214.94997501230353px) translate(-50%,-50%)}
+79.2857%{-webkit-transform:translate(299.1132679703313px,-219.9244548315092px) translate(-50%,-50%)}
+80.0000%{-webkit-transform:translate(327.05285010327384px,-225.6047170861553px) translate(-50%,-50%)}
+80.7143%{-webkit-transform:translate(350.99188211086266px,-229.3318208953466px) translate(-50%,-50%)}
+81.4286%{-webkit-transform:translate(369.2897062524364px,-230.81694469870502px) translate(-50%,-50%)}
+82.1429%{-webkit-transform:translate(382.6095695136046px,-230.2670215557407px) translate(-50%,-50%)}
+82.8571%{-webkit-transform:translate(391.61471887997664px,-227.88898452596368px) translate(-50%,-50%)}
+83.5714%{-webkit-transform:translate(396.9684013371609px,-223.88976666888385px) translate(-50%,-50%)}
+84.2857%{-webkit-transform:translate(399.33386387076644px,-218.47630104401122px) translate(-50%,-50%)}
+85.0000%{-webkit-transform:translate(399.3743534664029px,-211.85552071085596px) translate(-50%,-50%)}
+85.7143%{-webkit-transform:translate(397.7531171096789px,-204.23435872892804px) translate(-50%,-50%)}
+86.4286%{-webkit-transform:translate(395.13340178620365px,-195.8197481577373px) translate(-50%,-50%)}
+87.1429%{-webkit-transform:translate(392.1784544815864px,-186.81862205679408px) translate(-50%,-50%)}
+87.8571%{-webkit-transform:translate(389.5515221814362px,-177.43791348560842px) translate(-50%,-50%)}
+88.5714%{-webkit-transform:translate(387.9158518713616px,-167.88455550368997px) translate(-50%,-50%)}
+89.2857%{-webkit-transform:translate(387.9346905369723px,-158.365481170549px) translate(-50%,-50%)}
+90.0000%{-webkit-transform:translate(390.2712851638771px,-149.0876235456957px) translate(-50%,-50%)}
+90.7143%{-webkit-transform:translate(395.58888273768525px,-140.2579156886398px) translate(-50%,-50%)}
+91.4286%{-webkit-transform:translate(405.2387224319541px,-131.58377891493325px) translate(-50%,-50%)}
+92.1429%{-webkit-transform:translate(417.7452950330853px,-125.71805051922325px) translate(-50%,-50%)}
+92.8571%{-webkit-transform:translate(428.97566319594875px,-125.64532427014092px) translate(-50%,-50%)}
+93.5714%{-webkit-transform:translate(438.9657900990908px,-130.3586311683962px) translate(-50%,-50%)}
+94.2857%{-webkit-transform:translate(447.7516389210566px,-138.85100221469907px) translate(-50%,-50%)}
+95.0000%{-webkit-transform:translate(455.36917284039373px,-150.1154684097587px) translate(-50%,-50%)}
+95.7143%{-webkit-transform:translate(461.8543550356476px,-163.14506075428568px) translate(-50%,-50%)}
+96.4286%{-webkit-transform:translate(467.24314868536385px,-176.93281024898914px) translate(-50%,-50%)}
+97.1429%{-webkit-transform:translate(471.5715169680891px,-190.4717478945791px) translate(-50%,-50%)}
+97.8571%{-webkit-transform:translate(474.87542306236924px,-202.75490469176543px) translate(-50%,-50%)}
+98.5714%{-webkit-transform:translate(477.1908301467504px,-212.77531164125787px) translate(-50%,-50%)}
+99.2857%{-webkit-transform:translate(478.55370139977845px,-219.52599974376608px) translate(-50%,-50%)}
+100.0000%{-webkit-transform:translate(479px,-222px) translate(-50%,-50%)}
+}
