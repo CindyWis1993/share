@@ -1,0 +1,565 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://static.csweigou.com/pc/static/prettify.css"/>
+    <script type="text/javascript" src="https://static.csweigou.com/pc/static/js/prettify.js"></script>
+    <link href="./css/share.css" rel="stylesheet">
+    <title>轨迹动画分享</title>
+</head>
+
+<body>
+    <div class="container">
+        <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">CSS、SVG-轨迹动画</p>
+        <p>
+            <b>（一）为什么选择分享轨迹动画？</b>
+            <br><br>首先，前端开发中经常需要实现各种动画效果，特别是轨迹动画；比如世界杯射门小游戏（球类的弧线轨迹运动），捕鱼小游戏（鱼类元素的游动轨迹）、各类活动的飘落或震动轨迹等（活动红包等），因此这次就选择最常见的轨迹动画跟大家分享。
+            <br><br>
+            <b>（二）为什么选择用CSS、SVG实现？</b>
+            <br><br>其实JS结合Canvas或者Flash可以实现更加复杂多变的轨迹动画效果，但是结合我们日常开发需求，css更为常用；而且我们官网H5已经开始使用SVG图片，因此结合实际我选择总结了CSS、SVG实现轨迹动画（其实还有很多方式，比如GIF&帧动画；GIF现在已经很少用于动画展示了，图像通常很大且清晰度较差；帧动画这里也不做分享，通常复杂的轨迹动画若用帧动画实现同样需要非常多的图片，且不易修改）。
+            <br><br>常用的轨迹动画主要分为三种：直线轨迹动画、曲线轨迹动画、不规则/复杂轨迹动画，下面就一 一来看下实现方式：
+            <br>
+            <br>
+        </p>
+        <!-- 直线 -->
+        <div class="lineMain border-shadow">
+            <p>
+                <b>1、直线轨迹动画</b>
+                <br>
+                <br>直线轨迹动画是轨迹动画中最为简单常用的一种，通常可以直接两点定线来实现；如果需要做速度的调整，则直接改变运动的时间即可，因此首选css方式。通常，css直线轨迹动画我们会选择用top/left或者translate的变化实现，哪种更优？
+                <br>
+                top/left花了大量的时间去绘制每一帧。所有的css都是在CPU上计算的。
+                <br>
+                <b>translate</b>完全的使用GPU，效率更高，浏览器可以优化大量绘制和组合的时间。
+                <br>
+            </p>
+            <pre class="lang-css">
+                <code>
+    .straightLine {
+        animation: straightLine 2s alternate infinite;
+    }
+    @keyframes straightLine {
+        0% { transform: translate(0, 0); }
+        30% { transform: translate(100px, 0); }
+        60% { transform: translate(200px, 100px); }
+        100% { transform: translate(300px, 100px); }
+    }
+                </code>
+            </pre>
+            <div class="lineCon straightLineCon">
+                <i class="point-1">(0, 0)</i>
+                <i class="point-2">(100, 0)</i>
+                <i class="point-3">(200, 100)</i>
+                <i class="point-4">(300, 100)</i>
+                <div class="centerCon DJLine"></div>
+                <div class="straightLine"></div>
+            </div>
+        </div>
+
+        <!-- 曲线 -->
+        <div class="lineMain border-shadow">
+            <p>
+                <b>2、曲线轨迹动画</b>
+                <br>
+                <br>曲线轨迹动画多用于实现球类的轨迹效果、loading效果等，实现方法多种多样，可以直接使用rotate、也可以用纵向横向两个方向的运动结合实现效果；
+            </p>
+            <br>
+            <br>
+            <p>rotate实现轨迹动画，可以利用容器嵌套，外层容器旋转实现，但只适用于轨迹为圆形或圆形的一部分的情况：</p>
+            <pre class="lang-css">
+                <code>
+    .rotateBox-1 {
+        animation: rotateLine1 2s linear infinite;
+    }
+    .rotateBox-2 {
+        animation: rotateLine2 2s linear infinite;
+    }
+    @keyframes rotateLine1 {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+        
+    @keyframes rotateLine2 {
+        0% { transform: rotate(135deg); }
+        50% { transform: rotate(315deg); }
+        100% { transform: rotate(135deg); }
+    }
+                </code>
+            </pre>
+            <div class="lineCon rotateLineCon">rotateBox-1
+                <div class="rotateBox rotateBox-1">
+                    <div class="rotateLine"></div>
+                </div>
+            </div>
+            <div class="lineCon rotateLineCon">rotateBox-2
+                <div class="rotateBox rotateBox-2">
+                    <div class="rotateLine"></div>
+                </div>
+            </div>
+            <button class="btn btn-default hideBorder" onClick="hideBorder('hide')">hideRealCon</button>
+            <button class="btn btn-default showBorder" onClick="hideBorder('show')">showRealCon</button>
+            <br>
+            <br>
+            <p>实际开发中，基本不可能只需要实现简单的直线或者圆弧运动，经常会出现不规则的弧线运动，比如椭圆弧形运动，这时候就需要两个方向运动结合。
+                <br>
+                其原理是：对一个物体来说，运动永远是受X轴以及Y轴的力控制，因此单独对一个物体无法进行改变，只能达到直线轨迹的效果，要想实现双向运动实现曲线轨迹，只能再增加一个元素，使其互相影响，一方负责X轴运动，另一方负责Y轴运动实现可以实现椭圆等特殊的轨迹效果（JS可以实现单一物体两方向不同速率实现弧形运动），但是弧度的计算比较复杂，较难调整：</p>
+            <br>
+            <p>具体如何实现呢，首先为了创建一条不成直线的路径，我们希望X轴和Y轴的运动速度不同步，因此需要对X轴跟Y轴设置两种计时函数，
+                所以，分别对X轴跟Y轴使用ease-in、ease-out，以下是对应的描述：</p>
+            <img src="http://www.cindyself.com.cn/imgs/shareImgs/css.jpg">
+            <pre class="lang-css">
+                <code>
+    .moveLine-1 {
+        animation: moveLineX 2.5s infinite ease-in;
+    }
+    .moveLine-2 {
+        animation: moveLineY 2.5s infinite ease-out;
+    }
+    .moveLine-3 {
+        animation: moveLineX 2.5s infinite ease-in;
+    }
+    .moveLine-3::after {
+        animation: moveLineY 2.5s infinite ease-out;
+    }
+    @keyframes moveLineX {
+        50% {
+        animation-timing-function: ease-in;
+        transform: translateX(100px);
+        }
+    }
+    @keyframes moveLineY {
+        50% {
+        animation-timing-function: ease-out;
+        transform: translateY(100px);
+        }
+    }
+                </code>
+            </pre>
+            <div class="lineCon moveLineCon">moveLine-1
+                <div class="moveLine-1"></div>
+            </div>
+            <div class="lineCon moveLineCon">moveLine-2
+                <div class="moveLine-2"></div>
+            </div>
+            <div class="lineCon moveLineCon DJLine">moveLine-3
+                <div class="moveLine-main"></div>
+            </div>
+            <br>
+            <button class="btn btn-default" onClick="hideMain('hide')">hideCon</button>
+            <button class="btn btn-default" onClick="hideMain('show')">showCon</button>
+            <br>
+            <br>
+            <p>
+                从上面的描述中我们注意到ease-in、ease-out等效果的实现，实际上是用了贝塞尔曲线（cubic-bezier），因此我们需要先了解贝塞尔曲线是什么：
+                <a class="color-main-fixed" target="blank" href="https://baike.baidu.com/item/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1091769?fr=aladdin">贝塞尔百度百科</a>
+                <br><br>
+                一阶贝塞尔曲线只是一条两点之间的直线：<img src="http://www.cindyself.com.cn/imgs/shareImgs/696855482-56d6558fa77c0_articlex.gif" style="width: auto;">
+                二阶贝塞尔：<img src="http://www.cindyself.com.cn/imgs/shareImgs/3638926887-56d655c8a7b14_articlex.gif" style="width: auto;"><br>
+                三阶贝塞尔（css曲线效果）：<img src="http://www.cindyself.com.cn/imgs/shareImgs/3276355006-56d6563ac18b9_articlex.gif" style="width: auto;">
+                <br>
+                <br>
+                <p>在p0p1、p1p2、p2p3等等的起点到控制点再到终点的连线中，每段连线都被分割成了两部分（仔细看动图中的黑色、绿色、蓝色圆点），各段连线中两部分的比值都是相同的，比值范围是0到1，而这个比值就是t。</p>
+                <br> CSS3动画速度的控制通过三次贝塞尔曲线函数实现，定义规则为:
+                <br>
+                <b>cubic-bezier (x1, y1, x2, y2)</b>
+                <br>
+                <br> P0：默认值 (0, 0)
+                <br> P1：动态取值 (x1, y1)
+                <br> P2：动态取值 (x2, y2)
+                <br> P3：默认值 (1, 1)
+                <img src="http://www.cindyself.com.cn/imgs/shareImgs/cubic.jpg" style="width: auto;">
+                <br>
+                <br> 关于三次贝塞尔曲线最直接的理解是，将以一条直线放在范围只有 1 的坐标轴中，并从中间拿出两个点来拉扯（X 轴的取值区间是 [0, 1]，Y 轴任意），最后形成的曲线就是动画的速度曲线。
+                <br>
+                <br> 但是贝塞尔曲线实际应用于动画开发中时，由于计算比较复杂（大学高数的贝塞尔曲线不要忘光了，了解更多-><a class="color-main-fixed" target="blank" href="https://segmentfault.com/a/1190000012774280?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com&share_user=1030000000178452">图形算法：贝塞尔曲线</a>），一般很难完全还原本身设计的动画轨迹，因此可以借助一些辅助工具实现：
+                <a class="color-main-fixed" target="blank" href="https://cubic-bezier.com/#.17,.67,.83,.67">点击就送可视化贝塞尔曲线</a><br>
+            </p>
+            <input class="cubicX-input" placeholder="输入X轴贝塞尔值：" />
+            <input class="cubicY-input" placeholder="输入Y轴贝塞尔值：" />
+            <div class="lineCon moveLineCon DJLine">moveLine-test
+                <div class="moveLine-test">
+                    <div class="moveLine-after"></div>
+                </div>
+                <div class="moveLine-X">X</div>
+                <div class="moveLine-Y">Y</div>
+            </div>
+            <button class="btn btn-default startBezier">startBezier</button><br>
+            <i>官网的世界杯小游戏，采用了两方向运动结合，虽然不是用css动画实现，但也是在createjs中使用两方向不同速度实现的椭圆形轨迹，原理是一样的</i>
+            <br><br> 目前已经有很多贝塞尔曲线动画开发辅助工具了（这里的贝塞尔曲线动画与上面的贝塞尔曲线可视化是有区别的，
+            上面介绍cubic-bezier (x1, y1, x2, y2)，我们是用于控制X轴&Y轴方向速度的设置，用于css动画效果，而这里的生成工具则直接将我们画出的
+            贝塞尔曲线计算成关键点坐标后作为运动路径进行输出，这种工具扩展后可实现复杂曲线路径的实现）甚至支持上传自定义图片并导出样式代码：<a class="color-main-fixed" target="blank" href="https://coderjunb.github.io/CSS-Path/">在线生成自定义贝赛尔曲线路径动画</a>
+            <br><br>
+            <textarea class="coordpath">
+                        @-webkit-keyframes coordpath-simple{0.0000%{-webkit-transform:translate(6px,-9px) translate(-50%,-50%)}
+                        0.7143%{-webkit-transform:translate(5.989061588921288px,-9.039602040816135px) translate(-50%,-50%)}
+                        1.4286%{-webkit-transform:translate(5.957186588921331px,-9.157632653061114px) translate(-50%,-50%)}
+                        2.1429%{-webkit-transform:translate(5.9057853498541135px,-9.352928571428606px) translate(-50%,-50%)}
+                        2.8571%{-webkit-transform:translate(5.8362682215743575px,-9.62432653061228px) translate(-50%,-50%)}
+                        3.5714%{-webkit-transform:translate(5.750045553935877px,-9.97066326530603px) translate(-50%,-50%)}
+                        4.2857%{-webkit-transform:translate(5.648527696793053px,-10.39077551020398px) translate(-50%,-50%)}
+                        5.0000%{-webkit-transform:translate(5.533124999999984px,-10.88350000000014px) translate(-50%,-50%)}
+                        5.7143%{-webkit-transform:translate(5.4052478134110515px,-11.447673469387723px) translate(-50%,-50%)}
+                        6.4286%{-webkit-transform:translate(5.266306486880467px,-12.082132653061308px) translate(-50%,-50%)}
+                        7.1429%{-webkit-transform:translate(5.117711370262441px,-12.78571428571422px) translate(-50%,-50%)}
+                        7.8571%{-webkit-transform:translate(4.960872813411129px,-13.557255102040699px) translate(-50%,-50%)}
+                        8.5714%{-webkit-transform:translate(4.797201166180741px,-14.395591836734638px) translate(-50%,-50%)}
+                        9.2857%{-webkit-transform:translate(4.628106778425661px,-15.299561224489821px) translate(-50%,-50%)}
+                        10.0000%{-webkit-transform:translate(4.455000000000041px,-16.267999999999915px) translate(-50%,-50%)}
+                        10.7143%{-webkit-transform:translate(4.279291180758037px,-17.299744897959044px) translate(-50%,-50%)}
+                        11.4286%{-webkit-transform:translate(4.102390670553916px,-18.39363265306133px) translate(-50%,-50%)}
+                        12.1429%{-webkit-transform:translate(3.9257088192419474px,-19.548500000000104px) translate(-50%,-50%)}
+                        12.8571%{-webkit-transform:translate(3.7506559766763985px,-20.763183673469484px) translate(-50%,-50%)}
+                        13.5714%{-webkit-transform:translate(3.578642492711424px,-22.036520408163256px) translate(-50%,-50%)}
+                        14.2857%{-webkit-transform:translate(3.4110787172011783px,-23.367346938775427px) translate(-50%,-50%)}
+                        15.0000%{-webkit-transform:translate(3.2493749999998727px,-24.754500000000007px) translate(-50%,-50%)}
+                        15.7143%{-webkit-transform:translate(3.0949416909620595px,-26.196816326530552px) translate(-50%,-50%)}
+                        16.4286%{-webkit-transform:translate(2.9491891399417227px,-27.693132653061184px) translate(-50%,-50%)}
+                        17.1429%{-webkit-transform:translate(2.813527696792903px,-29.2422857142858px) translate(-50%,-50%)}
+                        17.8571%{-webkit-transform:translate(2.6893677113702665px,-30.843112244898066px) translate(-50%,-50%)}
+                        18.5714%{-webkit-transform:translate(2.5781195335276834px,-32.494448979591766px) translate(-50%,-50%)}
+                        19.2857%{-webkit-transform:translate(2.4811935131195355px,-34.19513265306114px) translate(-50%,-50%)}
+                        20.0000%{-webkit-transform:translate(2.400000000000091px,-35.94399999999996px) translate(-50%,-50%)}
+                        20.7143%{-webkit-transform:translate(2.3359493440233337px,-37.73988775510213px) translate(-50%,-50%)}
+                        21.4286%{-webkit-transform:translate(2.2904518950436454px,-39.581632653061206px) translate(-50%,-50%)}
+                        22.1429%{-webkit-transform:translate(2.264918002915408px,-41.46807142857142px) translate(-50%,-50%)}
+                        22.8571%{-webkit-transform:translate(2.2607580174927193px,-43.39804081632644px) translate(-50%,-50%)}
+                        23.5714%{-webkit-transform:translate(2.2793822886296766px,-45.37037755102051px) translate(-50%,-50%)}
+                        24.2857%{-webkit-transform:translate(2.3222011661807755px,-47.38391836734695px) translate(-50%,-50%)}
+                        25.0000%{-webkit-transform:translate(2.390625px,-49.4375px) translate(-50%,-50%)}
+                        25.7143%{-webkit-transform:translate(2.486064139941618px,-51.52995918367344px) translate(-50%,-50%)}
+                        26.4286%{-webkit-transform:translate(2.6099289358601254px,-53.660132653061055px) translate(-50%,-50%)}
+                        27.1429%{-webkit-transform:translate(2.763629737609392px,-55.826857142856966px) translate(-50%,-50%)}
+                        27.8571%{-webkit-transform:translate(2.948576895043743px,-58.02896938775518px) translate(-50%,-50%)}
+                        28.5714%{-webkit-transform:translate(3.166180758017447px,-60.26530612244892px) translate(-50%,-50%)}
+                        29.2857%{-webkit-transform:translate(3.417851676384771px,-62.53470408163287px) translate(-50%,-50%)}
+                        30.0000%{-webkit-transform:translate(3.704999999999984px,-64.83600000000013px) translate(-50%,-50%)}
+                        30.7143%{-webkit-transform:translate(4.0290360787171835px,-67.16803061224493px) translate(-50%,-50%)}
+                        31.4286%{-webkit-transform:translate(4.391370262390694px,-69.5296326530613px) translate(-50%,-50%)}
+                        32.1429%{-webkit-transform:translate(4.793412900874728px,-71.91964285714278px) translate(-50%,-50%)}
+                        32.8571%{-webkit-transform:translate(5.236574344023381px,-74.33689795918349px) translate(-50%,-50%)}
+                        33.5714%{-webkit-transform:translate(5.72226494169098px,-76.78023469387745px) translate(-50%,-50%)}
+                        34.2857%{-webkit-transform:translate(6.251895043731793px,-79.24848979591832px) translate(-50%,-50%)}
+                        35.0000%{-webkit-transform:translate(6.826874999999973px,-81.74049999999988px) translate(-50%,-50%)}
+                        35.7143%{-webkit-transform:translate(7.448615160349789px,-84.25510204081638px) translate(-50%,-50%)}
+                        36.4286%{-webkit-transform:translate(8.118525874635509px,-86.79113265306137px) translate(-50%,-50%)}
+                        37.1429%{-webkit-transform:translate(8.838017492711288px,-89.34742857142862px) translate(-50%,-50%)}
+                        37.8571%{-webkit-transform:translate(9.608500364431507px,-91.92282653061227px) translate(-50%,-50%)}
+                        38.5714%{-webkit-transform:translate(10.431384839650264px,-94.51616326530598px) translate(-50%,-50%)}
+                        39.2857%{-webkit-transform:translate(11.3080812682216px,-97.12627551020398px) translate(-50%,-50%)}
+                        40.0000%{-webkit-transform:translate(12.240000000000066px,-99.75199999999995px) translate(-50%,-50%)}
+                        40.7143%{-webkit-transform:translate(13.228551384839704px,-102.39217346938779px) translate(-50%,-50%)}
+                        41.4286%{-webkit-transform:translate(14.275145772594726px,-105.04563265306138px) translate(-50%,-50%)}
+                        42.1429%{-webkit-transform:translate(15.381193513119456px,-107.71121428571439px) translate(-50%,-50%)}
+                        42.8571%{-webkit-transform:translate(16.548104956268162px,-110.3877551020409px) translate(-50%,-50%)}
+                        43.5714%{-webkit-transform:translate(17.777290451895112px,-113.07409183673468px) translate(-50%,-50%)}
+                        44.2857%{-webkit-transform:translate(19.07016034985429px,-115.76906122448975px) translate(-50%,-50%)}
+                        45.0000%{-webkit-transform:translate(20.42812500000008px,-118.47149999999988px) translate(-50%,-50%)}
+                        45.7143%{-webkit-transform:translate(21.852594752186633px,-121.18024489795908px) translate(-50%,-50%)}
+                        46.4286%{-webkit-transform:translate(23.34497995626822px,-123.8941326530612px) translate(-50%,-50%)}
+                        47.1429%{-webkit-transform:translate(24.906690962099105px,-126.61200000000008px) translate(-50%,-50%)}
+                        47.8571%{-webkit-transform:translate(26.539138119533504px,-129.33268367346943px) translate(-50%,-50%)}
+                        48.5714%{-webkit-transform:translate(28.243731778425627px,-132.05502040816327px) translate(-50%,-50%)}
+                        49.2857%{-webkit-transform:translate(30.021882288629797px,-134.77784693877555px) translate(-50%,-50%)}
+                        50.0000%{-webkit-transform:translate(31.875px,-137.5px) translate(-50%,-50%)}
+                        50.7143%{-webkit-transform:translate(33.804495262390674px,-140.22031632653056px) translate(-50%,-50%)}
+                        51.4286%{-webkit-transform:translate(35.81177842565603px,-142.9376326530612px) translate(-50%,-50%)}
+                        52.1429%{-webkit-transform:translate(37.898259839650166px,-145.6507857142857px) translate(-50%,-50%)}
+                        52.8571%{-webkit-transform:translate(40.06534985422735px,-148.35861224489798px) translate(-50%,-50%)}
+                        53.5714%{-webkit-transform:translate(42.31445881924196px,-151.0599489795918px) translate(-50%,-50%)}
+                        54.2857%{-webkit-transform:translate(44.64699708454805px,-153.75363265306117px) translate(-50%,-50%)}
+                        55.0000%{-webkit-transform:translate(47.06437500000004px,-156.43849999999998px) translate(-50%,-50%)}
+                        55.7143%{-webkit-transform:translate(49.56800291545187px,-159.11338775510205px) translate(-50%,-50%)}
+                        56.4286%{-webkit-transform:translate(52.15929118075803px,-161.77713265306124px) translate(-50%,-50%)}
+                        57.1429%{-webkit-transform:translate(54.83965014577262px,-164.42857142857144px) translate(-50%,-50%)}
+                        57.8571%{-webkit-transform:translate(57.610490160349855px,-167.0665408163265px) translate(-50%,-50%)}
+                        58.5714%{-webkit-transform:translate(60.47322157434405px,-169.68987755102046px) translate(-50%,-50%)}
+                        59.2857%{-webkit-transform:translate(63.42925473760937px,-172.29741836734695px) translate(-50%,-50%)}
+                        60.0000%{-webkit-transform:translate(66.48000000000002px,-174.88799999999998px) translate(-50%,-50%)}
+                        60.7143%{-webkit-transform:translate(69.62686771137027px,-177.46045918367344px) translate(-50%,-50%)}
+                        61.4286%{-webkit-transform:translate(72.87126822157438px,-180.01363265306128px) translate(-50%,-50%)}
+                        62.1429%{-webkit-transform:translate(76.21461188046646px,-182.54635714285718px) translate(-50%,-50%)}
+                        62.8571%{-webkit-transform:translate(79.65830903790084px,-185.05746938775508px) translate(-50%,-50%)}
+                        63.5714%{-webkit-transform:translate(83.20377004373177px,-187.545806122449px) translate(-50%,-50%)}
+                        64.2857%{-webkit-transform:translate(86.85240524781341px,-190.0102040816327px) translate(-50%,-50%)}
+                        65.0000%{-webkit-transform:translate(90.60562500000003px,-192.4495px) translate(-50%,-50%)}
+                        65.7143%{-webkit-transform:translate(94.46483965014573px,-194.86253061224488px) translate(-50%,-50%)}
+                        66.4286%{-webkit-transform:translate(98.43145954810495px,-197.24813265306125px) translate(-50%,-50%)}
+                        67.1429%{-webkit-transform:translate(102.50689504373179px,-199.60514285714282px) translate(-50%,-50%)}
+                        67.8571%{-webkit-transform:translate(106.69255648688045px,-201.93239795918367px) translate(-50%,-50%)}
+                        68.5714%{-webkit-transform:translate(110.98985422740526px,-204.22873469387753px) translate(-50%,-50%)}
+                        69.2857%{-webkit-transform:translate(115.40019861516038px,-206.49298979591833px) translate(-50%,-50%)}
+                        70.0000%{-webkit-transform:translate(119.92499999999995px,-208.72400000000005px) translate(-50%,-50%)}
+                        70.7143%{-webkit-transform:translate(124.56566873177843px,-210.92060204081633px) translate(-50%,-50%)}
+                        71.4286%{-webkit-transform:translate(129.32361516034985px,-213.08163265306126px) translate(-50%,-50%)}
+                        72.1429%{-webkit-transform:translate(134.20024963556853px,-215.20592857142856px) translate(-50%,-50%)}
+                        72.8571%{-webkit-transform:translate(139.19698250728857px,-217.29232653061229px) translate(-50%,-50%)}
+                        73.5714%{-webkit-transform:translate(144.31522412536447px,-219.33966326530617px) translate(-50%,-50%)}
+                        74.2857%{-webkit-transform:translate(149.55638483965015px,-221.3467755102041px) translate(-50%,-50%)}
+                        75.0000%{-webkit-transform:translate(154.921875px,-223.3125px) translate(-50%,-50%)}
+                        75.7143%{-webkit-transform:translate(160.41310495626828px,-225.23567346938773px) translate(-50%,-50%)}
+                        76.4286%{-webkit-transform:translate(166.03148505830904px,-227.1151326530612px) translate(-50%,-50%)}
+                        77.1429%{-webkit-transform:translate(171.77842565597678px,-228.94971428571432px) translate(-50%,-50%)}
+                        77.8571%{-webkit-transform:translate(177.6553370991253px,-230.73825510204085px) translate(-50%,-50%)}
+                        78.5714%{-webkit-transform:translate(183.6636297376093px,-232.4795918367347px) translate(-50%,-50%)}
+                        79.2857%{-webkit-transform:translate(189.80471392128277px,-234.17256122448975px) translate(-50%,-50%)}
+                        80.0000%{-webkit-transform:translate(196.08000000000004px,-235.81600000000003px) translate(-50%,-50%)}
+                        80.7143%{-webkit-transform:translate(202.49089832361528px,-237.4087448979592px) translate(-50%,-50%)}
+                        81.4286%{-webkit-transform:translate(209.03881924198254px,-238.9496326530612px) translate(-50%,-50%)}
+                        82.1429%{-webkit-transform:translate(215.7251731049563px,-240.4375px) translate(-50%,-50%)}
+                        82.8571%{-webkit-transform:translate(222.55137026239072px,-241.87118367346943px) translate(-50%,-50%)}
+                        83.5714%{-webkit-transform:translate(229.51882106414007px,-243.24952040816322px) translate(-50%,-50%)}
+                        84.2857%{-webkit-transform:translate(236.6289358600584px,-244.5713469387755px) translate(-50%,-50%)}
+                        85.0000%{-webkit-transform:translate(243.88312499999995px,-245.83550000000002px) translate(-50%,-50%)}
+                        85.7143%{-webkit-transform:translate(251.28279883381924px,-247.04081632653066px) translate(-50%,-50%)}
+                        86.4286%{-webkit-transform:translate(258.8293677113703px,-248.18613265306124px) translate(-50%,-50%)}
+                        87.1429%{-webkit-transform:translate(266.5242419825073px,-249.2702857142857px) translate(-50%,-50%)}
+                        87.8571%{-webkit-transform:translate(274.3688319970845px,-250.29211224489796px) translate(-50%,-50%)}
+                        88.5714%{-webkit-transform:translate(282.36454810495627px,-251.25044897959185px) translate(-50%,-50%)}
+                        89.2857%{-webkit-transform:translate(290.5128006559768px,-252.1441326530612px) translate(-50%,-50%)}
+                        90.0000%{-webkit-transform:translate(298.81499999999994px,-252.97200000000004px) translate(-50%,-50%)}
+                        90.7143%{-webkit-transform:translate(307.2725564868804px,-253.732887755102px) translate(-50%,-50%)}
+                        91.4286%{-webkit-transform:translate(315.8868804664721px,-254.42563265306126px) translate(-50%,-50%)}
+                        92.1429%{-webkit-transform:translate(324.6593822886297px,-255.04907142857138px) translate(-50%,-50%)}
+                        92.8571%{-webkit-transform:translate(333.59147230320696px,-255.6020408163265px) translate(-50%,-50%)}
+                        93.5714%{-webkit-transform:translate(342.68456086005835px,-256.0833775510204px) translate(-50%,-50%)}
+                        94.2857%{-webkit-transform:translate(351.9400583090379px,-256.491918367347px) translate(-50%,-50%)}
+                        95.0000%{-webkit-transform:translate(361.359375px,-256.8265px) translate(-50%,-50%)}
+                        95.7143%{-webkit-transform:translate(370.9439212827989px,-257.0859591836735px) translate(-50%,-50%)}
+                        96.4286%{-webkit-transform:translate(380.69510750728875px,-257.2691326530612px) translate(-50%,-50%)}
+                        97.1429%{-webkit-transform:translate(390.6143440233236px,-257.37485714285714px) translate(-50%,-50%)}
+                        97.8571%{-webkit-transform:translate(400.70304118075796px,-257.4019693877551px) translate(-50%,-50%)}
+                        98.5714%{-webkit-transform:translate(410.9626093294462px,-257.34930612244904px) translate(-50%,-50%)}
+                        99.2857%{-webkit-transform:translate(421.394458819242px,-257.2157040816326px) translate(-50%,-50%)}
+                        100.0000%{-webkit-transform:translate(432px,-257px) translate(-50%,-50%)}
+                        }
+            </textarea>
+            <div class="autoCon">
+                <div class="rotateLine coordpath-simple"></div>
+                <button class="btn btn-default startCssBezier">startCssBezier</button>
+            </div>
+            <br>
+        </div>
+
+        <!-- 不规则路径 -->
+        <div class="lineMain border-shadow">
+            <p>
+                <b>3、不规则轨迹动画</b>
+                <br>
+                <br>不规则轨迹的动画在开发中时有出现，这种路径跟随动画很难使用css实现，这种轨迹动画一般借助SVG实现：
+                <br>
+                <a class="color-main-fixed" target="blank" href="https://editor.method.ac/">点击就送SVG路径绘制</a>
+            </p>
+            <br>
+            <br>
+            <pre class="lang-html">
+                <code>
+    &lt;svg width="580" height="400"&gt;
+        &lt;g&gt;
+            &lt;rect 
+                fill="#fff" 
+                id="canvas_background" 
+                height="402" 
+                width="582" 
+                y="-1" 
+                x="-1" /&gt;
+            &lt;g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid"&gt;
+                &lt;rect 
+                    fill="url(#gridpattern)" 
+                    stroke-width="0" 
+                    y="0" 
+                    x="0" 
+                    height="100%" 
+                    width="100%" /&gt;
+            &lt;/g&gt;
+        &lt;/g&gt;
+        &lt;g&gt;
+            &lt;title&gt;Layer 1&lt;/title&gt;
+            &lt;path 
+                stroke="#000"
+                opacity="0.36" 
+                d="m25.51089,285.4375c0,-0.80415 -0.20866,-0.92658 -0.88929,-2.41244c-0.96256,-2.10134 -4.7031,-6.32726 -6.22505,-9.64977c-1.07618,-2.34937 -2.07872,-5.87832 -3.55717,-8.04148c-1.32237,-1.93478 -2.77092,-3.18751 -3.55717,-5.62903c-1.02515,-3.18336 -1.99519,-5.68707 -2.66788,-8.84562c-0.90563,-4.25233 -3.34496,-8.88155 -4.44646,-13.67051c-0.74664,-3.24611 -1.42807,-5.64469 -1.77858,-8.84562c-0.44682,-4.08042 -0.88929,-7.23733 -0.88929,-11.25807c0,-4.02074 1.56099,-8.95179 3.55717,-12.06222c3.21874,-5.01544 5.99952,-9.7794 8.89292,-13.67051c2.48108,-3.33661 4.44646,-5.62903 6.22505,-7.23733c2.66788,-2.41244 5.4791,-3.81681 9.78221,-6.43318c3.68989,-2.24353 8.04661,-3.46305 12.45009,-4.02074c6.41157,-0.812 11.5608,-2.41244 16.89655,-2.41244c4.44646,0 8.00363,0 12.45009,0c3.55717,0 7.09419,0.07675 10.67151,0.80415c4.42404,0.89957 8.62851,2.84778 11.5608,4.02074c3.35321,1.34133 5.61145,1.87969 8.00363,3.21659c2.13964,1.19577 3.86503,2.17559 5.33575,4.02074c1.1627,1.45872 2.66788,4.02074 4.44646,5.62903c1.77858,1.6083 3.20219,3.42227 4.44646,4.82489c2.29432,2.58629 3.6602,5.59995 4.44646,8.04148c1.02515,3.18336 1.39575,5.73598 2.66788,8.84562c0.68992,1.68643 2.25924,4.06376 2.66788,5.62903c0.45687,1.75002 1.77858,3.21659 2.66788,5.62903c0.88929,2.41244 1.56098,4.93105 3.55717,8.04148c1.60937,2.50771 3.62487,3.713 4.44646,4.02074c2.32383,0.87041 2.27498,2.83003 5.33575,4.82489c1.61317,1.05139 4.62335,2.03641 7.11434,3.21659c3.93858,1.86605 6.93426,3.70657 11.5608,4.82489c6.07495,1.46841 12.45009,2.41244 17.78584,2.41244c7.11434,0 15.16405,0.31302 23.1216,-0.80415c8.96167,-1.25815 17.09461,-2.99465 20.45372,-5.62903c1.90019,-1.49023 3.71506,-4.7561 6.22505,-9.64977c2.84957,-5.55573 5.23062,-10.47571 7.11434,-17.69125c1.68485,-6.45377 2.66788,-13.67051 2.66788,-21.71199c0,-4.02074 0,-8.84562 0,-13.67051c0,-4.02074 -0.41398,-8.71542 -1.77858,-12.86636c-1.29209,-3.93038 -2.66788,-8.04148 -3.55717,-10.45392c-0.88929,-2.41244 -0.88929,-5.62903 -1.77858,-8.04148c-0.88929,-2.41244 -1.36995,-5.67205 -1.77858,-7.23733c-0.91374,-3.50006 -2.66788,-6.43318 -2.66788,-8.04148c0,-1.6083 -1.32813,-3.92308 -1.77858,-6.43318c-0.56978,-3.17506 -0.88929,-6.43318 -0.88929,-9.64977c0,-1.6083 0,-4.02074 0,-6.43318c0,-2.41244 0,-4.82489 0,-8.04148c0,-2.41244 0.39875,-5.47275 1.77858,-8.84562c1.27212,-3.10964 3.14132,-6.59314 4.44646,-8.84562c2.06363,-3.56149 4.94286,-6.04662 8.00363,-8.04148c3.22634,-2.10277 7.05002,-3.40294 12.45009,-4.82489c7.04084,-1.854 13.29786,-2.00959 20.45372,-2.41244c6.21302,-0.34977 9.67686,0.95716 12.45009,2.41244c3.43977,1.80506 6.04264,3.39368 8.89292,5.62903c3.35911,2.63439 6.8601,4.99511 8.89292,7.23733c1.59466,1.75894 5.33575,4.82489 8.89292,8.84562c3.55717,4.02074 5.9796,8.22059 8.89292,11.25807c2.47204,2.57739 5.08151,5.79925 7.11434,8.04148c3.18935,3.51789 6.58936,6.04729 9.78221,8.84562c4.08885,3.58362 8.16288,7.03116 13.33938,10.45392c4.59651,3.03925 9.41041,7.00608 15.11797,9.64977c6.76253,3.13234 13.41857,5.30515 22.2323,7.23733c6.29189,1.37933 13.37949,1.7302 19.56443,0c5.37312,-1.5031 12.63778,-4.54456 18.67514,-8.04148c6.44178,-3.73117 11.45935,-7.46042 14.22867,-11.25807c2.63629,-3.61525 4.56278,-8.81182 6.22505,-13.67051c1.91341,-5.59276 3.11182,-11.22467 3.55717,-18.4954c0.34423,-5.62042 0.5868,-12.08414 0,-18.4954c-0.44617,-4.87477 -1.43234,-9.77786 -2.66788,-12.06222c-1.40873,-2.60457 -2.85177,-3.87009 -4.44646,-5.62903c-2.03282,-2.24222 -3.97022,-3.59009 -7.11434,-6.43318c-3.14411,-2.84309 -5.00254,-5.96165 -8.89292,-8.84562c-2.47964,-1.83819 -4.44646,-4.02074 -7.11434,-5.62903c-2.66788,-1.6083 -4.90267,-2.8901 -6.22505,-4.82489c-1.47845,-2.16315 -2.66788,-4.02074 -3.55717,-4.82489c-1.77858,-1.6083 -2.25924,-4.06376 -2.66788,-5.62903c-0.45686,-1.75003 -0.88929,-2.41244 -0.88929,-3.21659c0,-1.6083 0,-4.02074 0,-5.62903c0,-1.6083 -0.80223,-3.07541 0.88929,-4.02074c1.51295,-0.84553 3.72258,-2.16521 5.33575,-3.21659c2.0405,-1.32991 3.29525,-1.88668 5.33575,-3.21659c1.61317,-1.05138 3.15624,-1.57224 6.22505,-2.41244c2.5534,-0.69909 6.22505,-1.6083 9.78221,-1.6083c4.44646,0 8.89292,0 12.45009,0c2.66788,0 6.29642,-0.55427 8.89292,0c3.87062,0.82625 5.82409,3.18054 8.89292,4.02074c1.70227,0.46606 1.94402,1.36106 3.55717,2.41244c1.02027,0.66495 1.2618,1.94512 2.66788,3.21659c1.40607,1.27147 2.66788,3.21659 3.55717,4.02074c0.88929,0.80415 1.77858,2.41244 2.66788,4.02074c0.88929,1.6083 1.64761,3.35579 2.66788,4.02074c1.61314,1.05139 1.77858,1.6083 1.77858,2.41244c0,0.80415 0.61589,0.95373 1.77858,2.41244c0.73536,0.92257 1.57428,1.62981 1.77858,2.41244c0.45686,1.75003 2.46357,3.2381 2.66788,4.02074c0.45686,1.75003 1.86565,3.87956 3.55717,4.82489c0.75647,0.42277 0.88929,0.80415 0.88929,1.6083l0.88929,0l0,0.80415" id="svg_1" stroke-width="1.5" stroke="#000" fill="none" /&gt;
+            &lt;image 
+                id="arrow" 
+                transform="translate(-30, -30)" 
+                style="overflow:visible;" 
+                x="0" 
+                y="0" 
+                width="60px" 
+                height="60px"
+                xlink:href="http://www.cindyself.com.cn/imgs/shareImgs/arrow.png"&gt;
+                &lt;animate 
+                    attributeName="opacity"
+                    values="0; 1; 1; 1; 1; 0"
+                    dur="4s"
+                    repeatCount="indefinite" /&gt;
+            &lt;/image&gt;
+            &lt;animateMotion 
+                xlink:href="#arrow" 
+                dur="4s"
+                begin="0s" 
+                fill="freeze"
+                repeatCount="indefinite"
+                rotate="auto-reverse"&gt;
+                &lt;mpath xlink:href="#svg_1" /&gt;
+            &lt;/animateMotion&gt;
+        &lt;/g&gt;
+    &lt;/svg&gt;
+                </code>
+            </pre>
+            <svg width="580" height="400">
+                <g>
+                    <rect fill="#fff" id="canvas_background" height="402" width="582" y="-1" x="-1" />
+                    <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+                        <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" />
+                    </g>
+                </g>
+                <g>
+                    <title>Layer 1</title>
+                    <path stroke="#000" opacity="0.36" d="m25.51089,285.4375c0,-0.80415 -0.20866,-0.92658 -0.88929,-2.41244c-0.96256,-2.10134 -4.7031,-6.32726 -6.22505,-9.64977c-1.07618,-2.34937 -2.07872,-5.87832 -3.55717,-8.04148c-1.32237,-1.93478 -2.77092,-3.18751 -3.55717,-5.62903c-1.02515,-3.18336 -1.99519,-5.68707 -2.66788,-8.84562c-0.90563,-4.25233 -3.34496,-8.88155 -4.44646,-13.67051c-0.74664,-3.24611 -1.42807,-5.64469 -1.77858,-8.84562c-0.44682,-4.08042 -0.88929,-7.23733 -0.88929,-11.25807c0,-4.02074 1.56099,-8.95179 3.55717,-12.06222c3.21874,-5.01544 5.99952,-9.7794 8.89292,-13.67051c2.48108,-3.33661 4.44646,-5.62903 6.22505,-7.23733c2.66788,-2.41244 5.4791,-3.81681 9.78221,-6.43318c3.68989,-2.24353 8.04661,-3.46305 12.45009,-4.02074c6.41157,-0.812 11.5608,-2.41244 16.89655,-2.41244c4.44646,0 8.00363,0 12.45009,0c3.55717,0 7.09419,0.07675 10.67151,0.80415c4.42404,0.89957 8.62851,2.84778 11.5608,4.02074c3.35321,1.34133 5.61145,1.87969 8.00363,3.21659c2.13964,1.19577 3.86503,2.17559 5.33575,4.02074c1.1627,1.45872 2.66788,4.02074 4.44646,5.62903c1.77858,1.6083 3.20219,3.42227 4.44646,4.82489c2.29432,2.58629 3.6602,5.59995 4.44646,8.04148c1.02515,3.18336 1.39575,5.73598 2.66788,8.84562c0.68992,1.68643 2.25924,4.06376 2.66788,5.62903c0.45687,1.75002 1.77858,3.21659 2.66788,5.62903c0.88929,2.41244 1.56098,4.93105 3.55717,8.04148c1.60937,2.50771 3.62487,3.713 4.44646,4.02074c2.32383,0.87041 2.27498,2.83003 5.33575,4.82489c1.61317,1.05139 4.62335,2.03641 7.11434,3.21659c3.93858,1.86605 6.93426,3.70657 11.5608,4.82489c6.07495,1.46841 12.45009,2.41244 17.78584,2.41244c7.11434,0 15.16405,0.31302 23.1216,-0.80415c8.96167,-1.25815 17.09461,-2.99465 20.45372,-5.62903c1.90019,-1.49023 3.71506,-4.7561 6.22505,-9.64977c2.84957,-5.55573 5.23062,-10.47571 7.11434,-17.69125c1.68485,-6.45377 2.66788,-13.67051 2.66788,-21.71199c0,-4.02074 0,-8.84562 0,-13.67051c0,-4.02074 -0.41398,-8.71542 -1.77858,-12.86636c-1.29209,-3.93038 -2.66788,-8.04148 -3.55717,-10.45392c-0.88929,-2.41244 -0.88929,-5.62903 -1.77858,-8.04148c-0.88929,-2.41244 -1.36995,-5.67205 -1.77858,-7.23733c-0.91374,-3.50006 -2.66788,-6.43318 -2.66788,-8.04148c0,-1.6083 -1.32813,-3.92308 -1.77858,-6.43318c-0.56978,-3.17506 -0.88929,-6.43318 -0.88929,-9.64977c0,-1.6083 0,-4.02074 0,-6.43318c0,-2.41244 0,-4.82489 0,-8.04148c0,-2.41244 0.39875,-5.47275 1.77858,-8.84562c1.27212,-3.10964 3.14132,-6.59314 4.44646,-8.84562c2.06363,-3.56149 4.94286,-6.04662 8.00363,-8.04148c3.22634,-2.10277 7.05002,-3.40294 12.45009,-4.82489c7.04084,-1.854 13.29786,-2.00959 20.45372,-2.41244c6.21302,-0.34977 9.67686,0.95716 12.45009,2.41244c3.43977,1.80506 6.04264,3.39368 8.89292,5.62903c3.35911,2.63439 6.8601,4.99511 8.89292,7.23733c1.59466,1.75894 5.33575,4.82489 8.89292,8.84562c3.55717,4.02074 5.9796,8.22059 8.89292,11.25807c2.47204,2.57739 5.08151,5.79925 7.11434,8.04148c3.18935,3.51789 6.58936,6.04729 9.78221,8.84562c4.08885,3.58362 8.16288,7.03116 13.33938,10.45392c4.59651,3.03925 9.41041,7.00608 15.11797,9.64977c6.76253,3.13234 13.41857,5.30515 22.2323,7.23733c6.29189,1.37933 13.37949,1.7302 19.56443,0c5.37312,-1.5031 12.63778,-4.54456 18.67514,-8.04148c6.44178,-3.73117 11.45935,-7.46042 14.22867,-11.25807c2.63629,-3.61525 4.56278,-8.81182 6.22505,-13.67051c1.91341,-5.59276 3.11182,-11.22467 3.55717,-18.4954c0.34423,-5.62042 0.5868,-12.08414 0,-18.4954c-0.44617,-4.87477 -1.43234,-9.77786 -2.66788,-12.06222c-1.40873,-2.60457 -2.85177,-3.87009 -4.44646,-5.62903c-2.03282,-2.24222 -3.97022,-3.59009 -7.11434,-6.43318c-3.14411,-2.84309 -5.00254,-5.96165 -8.89292,-8.84562c-2.47964,-1.83819 -4.44646,-4.02074 -7.11434,-5.62903c-2.66788,-1.6083 -4.90267,-2.8901 -6.22505,-4.82489c-1.47845,-2.16315 -2.66788,-4.02074 -3.55717,-4.82489c-1.77858,-1.6083 -2.25924,-4.06376 -2.66788,-5.62903c-0.45686,-1.75003 -0.88929,-2.41244 -0.88929,-3.21659c0,-1.6083 0,-4.02074 0,-5.62903c0,-1.6083 -0.80223,-3.07541 0.88929,-4.02074c1.51295,-0.84553 3.72258,-2.16521 5.33575,-3.21659c2.0405,-1.32991 3.29525,-1.88668 5.33575,-3.21659c1.61317,-1.05138 3.15624,-1.57224 6.22505,-2.41244c2.5534,-0.69909 6.22505,-1.6083 9.78221,-1.6083c4.44646,0 8.89292,0 12.45009,0c2.66788,0 6.29642,-0.55427 8.89292,0c3.87062,0.82625 5.82409,3.18054 8.89292,4.02074c1.70227,0.46606 1.94402,1.36106 3.55717,2.41244c1.02027,0.66495 1.2618,1.94512 2.66788,3.21659c1.40607,1.27147 2.66788,3.21659 3.55717,4.02074c0.88929,0.80415 1.77858,2.41244 2.66788,4.02074c0.88929,1.6083 1.64761,3.35579 2.66788,4.02074c1.61314,1.05139 1.77858,1.6083 1.77858,2.41244c0,0.80415 0.61589,0.95373 1.77858,2.41244c0.73536,0.92257 1.57428,1.62981 1.77858,2.41244c0.45686,1.75003 2.46357,3.2381 2.66788,4.02074c0.45686,1.75003 1.86565,3.87956 3.55717,4.82489c0.75647,0.42277 0.88929,0.80415 0.88929,1.6083l0.88929,0l0,0.80415" id="svg_1" stroke-width="1.5" stroke="#000" fill="none" />
+                    <image id="arrow" transform="translate(-30, -30)" style="overflow:visible;" x="0" y="0" width="60px" height="60px" xlink:href="http://www.cindyself.com.cn/imgs/shareImgs/fish.png">
+                        <!-- <animate attributeName="opacity" values="0; 1; 1; 1; 1; 0" dur="4s" repeatCount="indefinite" /> -->
+                    </image>
+                    <animateMotion xlink:href="#arrow" dur="4s" begin="0s" fill="freeze" repeatCount="indefinite" rotate="auto">
+                        <mpath xlink:href="#svg_1" />
+                    </animateMotion>
+                </g>
+            </svg>
+            <br><br> 上面介绍的在线模拟贝塞尔曲线动画工具通过多段曲线也可以实现复杂路径的运动：
+            <br><br>
+            <div class="autoCon" style="background: url('http://www.cindyself.com.cn/imgs/shareImgs/path.jpg')">
+                <div class="rotateLine coordpath-dif"></div>
+            </div>
+            <br><br><br>
+            <p>在查阅资料的过程中，我发现有些文章提到用新的CSS属性motion-path也可以实现类似效果，但目前支持程度堪忧，只有PC的高版本chrome以及Opera、最新的X5内核手机浏览器的支持情况较好：</p>
+            <a class="color-main-fixed" target="blank" href="https://www.w3cplus.com/css3/motion-path.html">CSS的motion-path属性</a>
+            <img src="http://www.cindyself.com.cn/imgs/shareImgs/motion.jpg" style="width: 100%;">
+            <p>但实际上我的chrome版本69也没有实现该属性的效果，经查发现2017年9月起，属性已经重新命名为<a class="color-main-fixed" target="blank" href="https://www.zhangxinxu.com/wordpress/2017/03/offset-path-css-animation/">offset-path</a>，浏览器支持程度不变</p>
+            <img src="http://www.cindyself.com.cn/imgs/shareImgs/offset.jpg" style="width: 100%;">
+            <pre class="lang-css">
+                <code>
+    #path {
+        position: absolute;
+        top: 40px;
+        left: -90px;
+        width: 100%;
+    }
+    
+    #zeplin {
+        offset-path: path("M1528,74 C1528,74 1373,133.857147 1268.50505,133.857143 C1164.0101,133.857138 1044.60849,63.2746747 942.414141,45.2857143 C840.219794,27.2967539 749.351683,18.0222476 595.72201,85.3965342 C442.092336,152.770821 424.504306,178.600216 316.186064,168.137541 C294.677978,156.981816 226.287635,133.857145 219.453224,52.0727741 C212.618812,-29.7115971 316.186058,-10.3505382 284.713623,99.4034497 C253.241188,209.157438 1.06334642,60.6018191 1.06334642,60.6018191");
+        
+        animation-name: whoosh;
+        animation-duration: 6s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: reverse;
+    }
+    @keyframes whoosh {
+        from { offset-distance: 0%; }
+        to { offset-distance: 100%; }
+    }
+                </code>
+            </pre>
+            <div class="offset-box">
+                <img id="path" src="https://zeplin.io/img/bgPath.svg" style="width: 1414px;">
+                <img id="zeplin" src="https://zeplin.io/img/icZeplin.svg" style="width: auto;">
+            </div>
+        </div>
+
+        <div class="lineMain border-shadow">
+            <b>小结</b>
+            <br><br><p>以上就是我总结的轨迹路径相关的实现方式，具体开发中使用哪种方式还是需要我们根据需求及支持的终端、浏览器等按需采用，以下是我总结的一点使用经验：</p>
+            <br>
+            <img src="http://www.cindyself.com.cn/imgs/shareImgs/end.png" style="width: auto;">
+            <br>
+            <p>更多的特殊路径动画相关：</p><br>
+            <a class="color-main-fixed" target="blank" href="https://blog.csdn.net/qq_32583189/article/details/53018981">1-图形算法：贝塞尔曲线</a>
+            <br>
+            <a class="color-main-fixed" target="blank" href="https://www.cnblogs.com/zamhown/p/6688369.html">2-大杀器Bodymovin和Lottie：把AE动画转换成HTML5/Android/iOS原生动画</a>
+            <br>
+            <a class="color-main-fixed" target="blank" href="https://docs.cocos.com/creator/manual/zh/#">3-Cocos Creator多终端游戏引擎</a>
+            <br>
+            <a class="color-main-fixed" target="blank" href="https://cloud.tencent.com/developer/article/1005913">4-CSS 路径动画工具的诞生</a>
+            <br>
+            <a class="color-main-fixed" target="blank" href="https://segmentfault.com/a/1190000012774280?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com&share_user=1030000000178452">5-贝塞尔公式推导与物体跟随复杂曲线的轨迹运动</a>
+        </div>
+    </div>
+</body>
+<script>
+    (function() {
+         $('pre').addClass('prettyprint');
+         prettyPrint();
+    })();
+    function hideBorder(type) {
+        if (type === 'hide') {
+            $('.rotateBox').css({
+                'border': '0'
+            });
+        } else {
+            $('.rotateBox').css({
+                'border': '1px solid #ff5e4d'
+            });
+        }
+    }
+    function hideMain(type) {
+        if (type === 'hide') {
+            $('.moveLine-main').css({
+                'background': '#ffffff'
+            });
+        } else {
+            $('.moveLine-main').css({
+                'background': '#333'
+            });
+        }
+    }
+    $('.startBezier').click(function(e) {
+        $('style')[0] ? $('head')[0].removeChild($('style')[0]) : '';
+        var cubicX = $('.cubicX-input').val();
+        var cubicY = $('.cubicY-input').val();
+        $('.moveLine-X').css({
+            animation: 'moveLineTestX 2.5s infinite ' + cubicX
+        });
+        $('.moveLine-test').css({
+            animation: 'moveLineTestX 2.5s infinite ' + cubicX
+        });
+        $('.moveLine-Y').css({
+            animation: 'moveLineTestY 2.5s infinite ' + cubicY
+        });
+        $('.moveLine-after').css({
+            animation: 'moveLineTestY 2.5s infinite ' + cubicY
+        });
+        var style = document.createElement('style');
+        var cssRules = `
+            @keyframes moveLineTestX { 
+                50% { 
+                    animation-timing-function: ${cubicX}; 
+                    transform: translateX(100px); 
+                }
+            }
+            @keyframes moveLineTestY { 
+                50% { 
+                    animation-timing-function: ${cubicY};
+                    transform: translateY(100px);
+                }
+            }`;
+        style.type = 'text/css';
+        style.innerHTML = cssRules;
+        $('head')[0].appendChild(style);
+    });
+    $('.startCssBezier').click(function(e) {
+        $('style')[0] ? $('head')[0].removeChild($('style')[0]) : '';
+        var animate = $('.coordpath').val();
+        var style = document.createElement('style');
+        var cssRules = `${animate}`;
+        style.type = 'text/css';
+        style.innerHTML = cssRules;
+        $('head')[0].appendChild(style);
+    }); 
+</script>
+
+</html>

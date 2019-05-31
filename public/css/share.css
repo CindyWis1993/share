@@ -14,7 +14,8 @@ img {
     margin-top: 20px;
     width: 100%;
 }
-.language-html {
+.prettyprint {
+    margin: 10px 0 30px 0;
     font-family: "Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";
 }
 .lineMain {
@@ -147,7 +148,7 @@ img {
 .moveLine-main::after {
     line-height: 1;
     display: block;
-    content: 'after';
+    content: ':after';
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -158,7 +159,7 @@ img {
 .moveLine-after {
     line-height: 1;
     display: block;
-    content: 'after';
+    content: ':after';
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -213,15 +214,15 @@ img {
     display: inline-block;
     width: 500px;
     height: 310px;
-    margin-left: 20px;
     position: relative;
     background: #272822;
     overflow: hidden;
 }
 .coordpath {
     display: inline-block;
-    width: 500px;
+    width: 100%;
     height: 310px;
+    margin-right: 20px;
 }
 .coordpath-simple {
     left: 0 !important;
@@ -231,7 +232,7 @@ img {
 .coordpath-dif {
     width: 50px;
     height: 50px;
-    background: url('./fish.png');
+    background: url('.http://www.cindyself.com.cn/imgs/shareImgs/fish.png');
     background-size: 100%;
     left: 0 !important;
     top: 310px !important;
@@ -521,4 +522,30 @@ img {
 98.5714%{-webkit-transform:translate(477.1908301467504px,-212.77531164125787px) translate(-50%,-50%)}
 99.2857%{-webkit-transform:translate(478.55370139977845px,-219.52599974376608px) translate(-50%,-50%)}
 100.0000%{-webkit-transform:translate(479px,-222px) translate(-50%,-50%)}
+}
+.offset-box {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+@keyframes whoosh {
+    from { offset-distance: 0%; }
+    to { offset-distance: 100%; }
+}
+  
+#path {
+    position: absolute;
+    top: 40px;
+    left: -90px;
+    width: 100%;
+}
+
+#zeplin {
+    offset-path: path("M1528,74 C1528,74 1373,133.857147 1268.50505,133.857143 C1164.0101,133.857138 1044.60849,63.2746747 942.414141,45.2857143 C840.219794,27.2967539 749.351683,18.0222476 595.72201,85.3965342 C442.092336,152.770821 424.504306,178.600216 316.186064,168.137541 C294.677978,156.981816 226.287635,133.857145 219.453224,52.0727741 C212.618812,-29.7115971 316.186058,-10.3505382 284.713623,99.4034497 C253.241188,209.157438 1.06334642,60.6018191 1.06334642,60.6018191");
+    
+    animation-name: whoosh;
+    animation-duration: 6s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
 }
