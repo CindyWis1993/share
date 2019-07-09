@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://static.csweigou.com/pc/static/prettify.css"/>
+    <script type="text/javascript" src="https://static.csweigou.com/pc/static/js/prettify.js"></script>
+    <link href="./css/share.css" rel="stylesheet">
+    <style class="turntableStyle"></style>
+    <title>toFixed(n)方法的陷阱</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="lineMain border-shadow">
+            <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">浮点数精度溢出用toFixed(n)方法，可以完美解决吗？</p>
+            <p>
+                我们平时的开放中经常遇到浮点数的处理，特别是金额展示计算方面，大家都知道有些浮点数，一旦进行计算，就会出现精度溢出的问题，比如：<br>
+                <br>加法：
+                <br>0.1 + 0.2 = 0.30000000000000004<br>0.1 + 0.7 = 0.7999999999999999<br>
+                <br>减法：
+                <br>0.3 - 0.2 = 0.09999999999999998<br>
+                <br>乘法：
+                <br>0.8 * 3 = 2.4000000000000004<br>
+                <br>除法：
+                <br>0.3 / 0.1 = 2.9999999999999996<br>
+                <br>这种情况大家在开发中应该都遇到过，我们也知道，出现这种情况的原因是标准的64位双精度浮点数的小数部分最多支持53位二进制位，因此截断的部分就会导致二进制转化为十进制时，产生精度差。（大学时候接触的计算机组成原理还记得的话这部分很好理解）<br>
+                <p>原理详解：<a class="color-main-fixed" href="https://github.com/camsong/blog/issues/9" target="_blank">JavaScript 浮点数陷阱及解法</a></p>
+                <br><b>思考：怎么解决这种问题呢？</b><br><br><br><a class="color-main-fixed" href="http://www.w3school.com.cn/jsref/jsref_tofixed.asp" target="blank">最简单粗暴的办法：toFixed()</a><br> 但是，JavaScript toFixed() 方法，真的没有问题吗？
+            </p>
+        </div>
+
+        <div class="lineMain border-shadow">
+            <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">toFixed(n)方法，存在偏差</p>
+            <p>以下是我们官网有用到toFixed()方法处理小数的地方：</p>
+            <pre class="lang-css">
+                <code>
+public static moneyThousand(money: any) {
+    if (money >= 0) {
+        if (money >= 1) {
+            return Math.round(Math.abs(Number(money))).toString().replace(/\B(?=(?:\S{3})+$)/g, ',');
+        } else {
+            const amount = Math.round(Number(money) * 100) / 100;
+            return Math.abs(Number(amount)).toFixed(2).replace(/\B(?=(?:\S{3})+$)/g, ',');
+        }
+    } else {
+        return '-' + Math.abs(Number(money)).toString().replace(/\B(?=(?:\S{3})+$)/g, ',');
+    }
+}</code>
+            </pre>
+            <p>用这个方法我们处理出的<span class="color-main-fixed">UtilHelper.moneyThousandFormat(1.335) = 1.33</span></p>
+            <p>我们日常普遍使用toFixed()方法的时候，是把他当做了四舍五入来看待，然而他其实被称作另一种的方法：“四舍六入五成双”。</p>
+            <p>
+                什么是四舍六入五成双：百度是这么说的：<br> 对于位数很多的近似数，当有效位数确定后，其后面多余的数字应该舍去，只保留有效数字最末一位，这种修约（舍入）规则是“四舍六入五成双”，也即“4舍6入5凑偶”这里“四”是指≤4 时舍去，"六"是指≥6时进上，"五"指的是根据5后面的数字来定，当5后有数时，舍5入1；当5后无有效数字时，需要分两种情况来讲：①5前为奇数，舍5入1；②5前为偶数，舍5不进。（0是偶数）<br>
+                <br>举个栗子：<br>
+                <br>普遍以为的四舍五入：<br>(0.525).toFixed(2) => 0.53<br>(1.335).toFixed(2) => 0.34<br>
+                <br>toFixed()的实际结果：<br>(0.525).toFixed(2)=>0.52<br>(1.335).toFixed(2) => 0.33<br>
+                <br>这样来看，我们本以为toFixed能够解决计算精度的问题，结果又出现了新的问题。那么，是不是所有末位5的小数进行toFixed()处理，都会出现这种情况呢，并不是：<br> 1.35.toFixed(1) => 1.4
+                <img style="width:73px" src="../imgs/why.jpg"><br>
+                这里的具体原因跟上面我们遇到过的加减乘除精度不准确是一样的原因，即64位双精度浮点数的小数在计算机的存储格式导致的：
+                <br>一个64位双精度浮点数的小数在计算机的存储格式：<br><img style="width:510px" src="../imgs/double.jpg">
+                <br>以2.55为例，二进制：10.1000110011001100...循环；写成2的科学记数法位 1.0100011001100....*2^1 <br>
+                <br>符号位：  0<br>
+                <br>指数位：  1000000000<br>
+                <br>尾数位：  0100011001100110011001100110011001100110011001100110<br>
+                <br>2.55.toFixed(n)就是在尾数位上减去第n位以外的小数，然后判断剩下的尾数是否大于1^-（n+1）。大于等于就进位，小于等于就不进位<br>
+                <br>2.55.toFixed(1) = <br>
+                01000000 00000100 01100110 01100110 01100110 01100110 01100110 01100110 - <br>
+                01000000 00000100 00000000 00000000 00000000 00000000 00000000 00000000 = <br>
+                00000000 00000000 01100110 01100110 01100110 01100110 01100110 01100110 = <br>
+                0.04999999999999982236431605997495353221893310546875 < 1^-2 = 0.05，所以不会进位。<br>
+                <br><a class="color-main-fixed" href="http://www.binaryconvert.com/convert_double.html?decimal=050046" target="_blank">转换工具</a>
+            </p>
+        </div>
+
+        <div class="lineMain border-shadow">
+            <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">解决方案</p>
+            <p>重写tofixed方法，目前比较通用的方法：</p>
+            <pre class="lang-css">
+                <code>
+function toFixed(num, s) {
+    var times = Math.pow(10, s);
+    var offserNum = num > 0 ? .5 : -.5;
+    var des = num * times + offserNum;
+    des = parseInt(des, 10) / times;
+    return des + '';
+}</code>
+            </pre>
+            <p>原理：在升级当前小数后，进行微量的便宜小数增减，提高64位精度。</p>
+            <!-- <p>但是在一些负数情况时，还是未解决问题，例如toFixed(-2999033.45645, 4) = -2999033.4564</p> -->
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+</html>
