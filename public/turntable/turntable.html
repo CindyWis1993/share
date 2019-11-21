@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link href="./turntable.css" rel="stylesheet">
+    <style class="turntableStyle"></style>
+    <title>转盘</title>
+</head>
+
+<body>
+    <div class="container">
+        <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">转盘</p>
+        <div class="turntableMain border-shadow text-center">
+            <input type="number" class="turntableNum" placeholder="请输入转盘格数(≥3)" value="3" />
+            <button class="btn btn-default turn-btn" data-type="pan">转盘转动</button>
+            <button class="btn btn-default turn-btn" data-type="arrow">指针转动</button>
+            <button class="btn btn-default setTurntable">生成转盘</button>
+
+            <div class="turntableCon">
+                <ul class="turntable">
+                    <li class="slice"></li>
+                </ul>
+                <div class="turntableArrow"></div>
+            </div>
+
+            <div class="alert">
+                <div class="alertBox text-center">
+                    <p class="prizeText"></p>
+                    <button class="btn btn-default initTurntable">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./turntable.js"></script>
+
+</html>

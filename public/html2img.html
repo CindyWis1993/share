@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
+    <link href="./css/share.css" rel="stylesheet">
+    <title>html2img</title>
+</head>
+
+<body>
+    <div class="test" id="capture">
+        <img style="width:73px" src="../imgs/why.jpg"><br>
+        生成图片<br>
+        23333333333~<br>
+        html2img
+    </div>
+    <img style="width: auto;" class="testImg">
+    <div><a class="down2">生成图片</a></div>  
+</body>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script>
+$(function () {
+    $('.down2').click(function () {
+        html2canvas($('.test')).then(canvas => {
+            var imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            $('.testImg').attr('src', imgUri);
+        });
+    });
+});
+</script>
+</html>

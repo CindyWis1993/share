@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "sourceMap": true,
+        "allowJs": true
+    },
+    "include": [
+        "public/ts/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

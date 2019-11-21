@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://static.csweigou.com/pc/static/prettify.css"/>
+    <script type="text/javascript" src="https://static.csweigou.com/pc/static/js/prettify.js"></script>
+    <link href="http://www.cindyself.com.cn/css/share.css" rel="stylesheet">
+    <title>CSS-冷门技巧分享</title>
+    <style>
+        p {margin: 0}
+        .hide {
+            opacity: 0;
+        }
+        .click-btn {
+            cursor: pointer;
+        }
+        .add-text {
+            white-space: nowrap;
+            color: cadetblue;
+            font-size: 50px;
+            height: 50px;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+        .add-icon {
+            width: 50px;
+            height: 50px;
+            margin: 10px 10px 10px 0;
+            outline: 26px solid cadetblue;
+            outline-offset: -50px;
+        }
+        .close-btn {
+            width: 51px;
+            height: 51px;
+            margin-top: 30px;
+            color: cadetblue;
+            border: 1px solid cadetblue;
+            border-radius: 50%;
+            outline: 10px solid cadetblue;
+            outline-offset: -34px;
+            transform: rotate(45deg);
+        }
+        .add-btn {
+            width: 51px;
+            height: 51px;
+            margin-top: 30px;
+            color: cadetblue;
+            border: 1px solid cadetblue;
+            border-radius: 50%;
+            outline: 10px solid cadetblue;
+            outline-offset: -34px;
+        }
+        .icon-1 {
+            float: left;
+            outline: 27px solid cadetblue;
+        }
+        .icon-2 {
+            float: left;
+            outline: 28px solid cadetblue;
+        }
+        .icon-3 {
+            float: left;
+            outline: 29px solid cadetblue;
+        }
+        .shadow {
+            float: left;
+            margin: 10px 30px 10px 0;
+            text-align: center;
+            line-height: 50px;
+            border: 1px solid cadetblue;
+        }
+        .shadow-2 {
+            width: 50px;
+            height: 50px;
+            box-shadow: 5px 5px 20px 1px cadetblue;
+        }
+        .shadow-4 {
+            width: 50px;
+            height: 50px;
+            box-shadow: 5px 5px 20px 1px cadetblue;
+        }
+        .shadow-1 {
+            width: 50px;
+            height: 50px;
+            box-shadow: -12px 0px 8px -6px cadetblue;
+        }
+        .turn-text-1 {
+            white-space: nowrap;
+            font-size: 50px;
+            width: auto;
+            color: cadetblue;
+            transform: rotate(0deg);
+            transition: all 2s;
+            display: inline-block;
+        }
+        .turn-text-1:hover {
+            transform: rotate(180deg);
+        }
+        .turn-text-2 {
+            white-space: nowrap;
+            font-size: 50px;
+            width: auto;
+            color: cadetblue;
+            transition: all 2s;
+            display: inline-block;
+        }
+        .turn-text-2:hover {
+            transform: scale(-1);
+        }
+        .back-text {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 40px;
+            color: cadetblue;
+        }
+        .back-text:hover {
+            letter-spacing: -80px;
+        }
+        .flex {
+            width: 300px;
+            overflow: auto;
+        }
+        .box-1 {
+            float: left;
+            width: 50%;
+            background: cadetblue;
+        }
+        .box-2 {
+            float: left;
+            width: 50%;
+            background: darkolivegreen;
+        }
+        .flex.add {
+            width: 300px;
+            overflow: hidden;
+        }
+        .flex.add .box-1 {
+            padding-bottom: 999px;
+            margin-bottom: -999px;
+        }
+        .flex.add .box-2 {
+            padding-bottom: 999px;
+            margin-bottom: -999px;
+        }
+        .margin-con {
+            width: 320px;
+            overflow: hidden;
+            background: darkolivegreen;
+        }
+        .margin-box {
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            width: 100px;
+            height: 100px;
+            background: cadetblue;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .last-con .margin-box:last-child {
+            margin-right: 0;
+        }
+        .third-con .margin-box:nth-child(3n+0) {
+            margin-right: 0;
+        }
+        .margin-con .test-container {
+            margin-right: -10px;
+            margin-bottom: -10px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">CSS-冷门技巧分享</p>
+
+
+        <p><b>（一）如何实现一个加号？</b></p><br><br>
+            之前我在看别人关于css的文章中提到了使用负的 outline-offset 实现了加号，因此研究了一下。<br>
+            我们一般实现加号的方式，就是直接使用字符：+，是不是非常方便？但是存在一个问题，我们看下面的例子，大家思考一下怎么实现：</p><br><br>
+            <p class="click-btn"><b>请实现一个50像素x50像素的加号+（不用图片）【点击】</b></p><br><br>
+            <p class="hide">是不是我们将font-size属性设置为50px就可以实现呢？</p>
+            <div class="hide">
+                <div class="add-text">文字大小50px：+</div><br><br>
+                <p>可以看出明显不行，我将这个容器的高度设置为了50像素，但是加号的大小明显更小，而且在不设置<span class="color-main-fixed">line-height</span>属性的情况下，还会不上下居中，并且粗细不可控，如果设置line-height呢：</p>
+            </div>
+            <div class="hide">
+                <div class="add-text" style="line-height: 50px">文字大小50px：+</div>
+                <p>位置仍然是偏下的。</p><br><br>
+                <p>那如果我们将font-size属性设置更大一些，100像素？</p>
+            </div>
+            <div class="hide">
+                <div class="add-text" style="font-size: 100px">文字大小100px：+</div><br><br><br><br>
+                <p>此时的加号，我通过工具测量出的大小是55px，这说明，想用<span class="color-main-fixed">font-size</span>属性实现固定大小的加号，不是最优选，这种方式很难控制实现的加号大小跟位置。</p><br><br>
+            </div>
+            <div class="hide">
+                <p><b>用 outline(轮廓) 和负的 outline-offset(轮廓偏移) 实现一个50像素x50像素的加号+：</b></p><br><br>
+                <p>一个完美的50像素x50像素加号：</p>
+                <div class="add-icon"></div>
+                <p>实现非常简单，首先确定宽高，设置outline属性为1/2宽高 + 1（加号的粗细），outline-offset为宽高值的负数即可。</p>
+                <p>上面我们提到，直接用文字时无法控制我们想要的加号粗细、垂直居中效果，但是outline属性也可以轻松解决，增加或减小outline值：</p>
+                <div style="width: 100%;overflow: auto;">
+                    <div class="add-icon icon-1">1</div>
+                    <div class="add-icon icon-2">2</div>
+                    <div class="add-icon icon-3">3</div>
+                </div>
+            </div>
+            <!-- <pre class="lang-css">
+                <code>
+    width: 50px;
+    height: 50px;
+    outline: 26px solid cadetblue;
+    outline-offset: -50px;
+
+    outline: 27px solid cadetblue;
+
+    outline: 28px solid cadetblue;
+
+    outline: 29px solid cadetblue;
+                </code>
+            </pre> -->
+            <p>此方式实现+号，还可以进行扩展，以往开发中遇到的关闭按钮，以及新增按钮，可以不用切图，直接用样式实现：</p>
+            <div style="width: 100%;overflow: auto;">
+                <div class="close-btn"></div>
+                <div class="add-btn"></div>
+            </div>
+            <br><br>
+
+
+            <p><b>（二）单侧投影</b></p>
+            <br><br>box-shadow，是常用来实现盒子投影的属性，我们通常来做两侧投影&多边投影，但其实，负数值可以实现单侧投影。<br><br>
+            <div style="width: 100%;overflow: auto;">
+                <div class="shadow shadow-2">2侧</div>
+                <div class="shadow shadow-4">4侧</div>
+                <div class="shadow shadow-1">1侧</div>
+            </div><br><br>
+            <p>box-shadow属性4个数值的含义分别是，x 方向偏移值、y 方向偏移值 、模糊半径、扩张半径，单侧投影的原理就是如果阴影的模糊半径，与负的扩张半径一致，那么我们将看不到任何阴影，因为生成的阴影将被包含在原来的元素之下，除非给它设定一个方向的偏移量，简单理解就是，前两个数值控制阴影中心，最后一个数值控制阴影大小。</p>
+            <!-- <pre class="lang-css">
+                <code>
+    box-shadow: 5px 5px 20px 1px cadetblue;
+
+    box-shadow: 5px 5px 20px 1px cadetblue;
+
+    box-shadow: -12px 0px 8px -6px cadetblue;
+                </code>
+            </pre> -->
+            <br><br>
+
+
+            <p><b>（三）翻转</b></p>
+            <br><br>我们要实现一个元素的 180° 翻转，我们会使用 transform: rotate(180deg)，这里有个小技巧，使用 transform: scale(-1) 可以达到同样的效果。<br><br>
+            <div class="turn-text-1">transform: rotate(180deg)翻转</div>
+            <div class="turn-text-2">transform: scale(-1) 翻转</div><br><br>
+            <p>box-shadow属性4个数值的含义分别是，x 方向偏移值、y 方向偏移值 、模糊半径、扩张半径，单侧投影的原理就是如果阴影的模糊半径，与负的扩张半径一致，那么我们将看不到任何阴影，因为生成的阴影将被包含在原来的元素之下，除非给它设定一个方向的偏移量，简单理解就是，前两个数值控制阴影中心，最后一个数值控制阴影大小。</p>
+            <!-- <pre class="lang-css">
+                <code>
+    transform: rotate(180deg);
+
+    transform: scale(-1);
+                </code>
+            </pre> -->
+            <br><br>
+
+
+            <p><b>（四）文字倒序</b></p>
+            <br><br>负的 letter-spacing 可以实现一段文字倒序排列，这种技巧实际使用很少。<br><br>
+            <div class="back-text">汉字的顺序不影响阅读</div><br><br>
+            <!-- <pre class="lang-css">
+                <code>
+    letter-spacing: -60px;
+                </code>
+            </pre> -->
+            <br><br>
+
+
+            <p><b>（五）实现等高布局</b></p>
+            <br><br>flexbox 布局是目前实现等高布局最主流的方法，不过 padding + margin 的结合，也可以实现。<br><br>
+            <p>这是两个普通非等高布局</p>
+            <div class="flex">
+                <div class="box-1">左盒子<br>左盒子<br>左盒子<br>左盒子<br></div>
+                <div class="box-2">右盒子<br></div>
+            </div><br><br>
+            <p>padding + margin 结合实现等高布局，原理其实是使用一个很大的正 padding 和相同的负 margin 相消的方法填充左右两栏</p>
+            <div class="flex add">
+                <div class="box-1">左盒子<br>左盒子<br>左盒子<br>左盒子<br></div>
+                <div class="box-2">右盒子<br></div>
+            </div><br><br>
+            <!-- <pre class="lang-css">
+                <code>
+    父容器：
+        width: 300px;
+        overflow: hidden;
+    
+    子容器
+        padding-bottom: 999px;
+        margin-bottom: -999px;
+                </code>
+            </pre> -->
+            <br><br>
+
+
+            <p><b>（六）去除多余边距&border</b></p>
+            <br><br>我们在开发时经常遇到这样的样式处理：每个列表之间设置一定的间距（margin-right），这样是为了多个元素并排展示时，中间留有空隙，此时在父容器定宽的情况下，元素会错位，比如：<br><br>
+            <div style="width: 100%; overflow: auto;">
+                <div class="margin-con">
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                </div>  
+            </div>
+            <br>
+            <p>这就出现了一个问题，右侧跟底部的边距，是不希望展示出来的，这时候我们通常的处理方法是，单行展示：用last-child选择器，多行展示，用:nth-child(3n+0)：</p>
+            <div style="width: 100%; overflow: auto;">
+                <div class="margin-con last-con">
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box">last-child</div>
+                </div>
+            </div>
+            <br>
+            <div style="width: 100%; overflow: auto;">
+                <div class="margin-con third-con">
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box">nth-child(3n+0)</div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box"></div>
+                    <div class="margin-box">nth-child(3n+0)</div>
+                </div>
+            </div>
+            <p>上面的选择器解决了右侧边距的问题，但是没有解决底部的问题，其实最简单的技巧就是，增加一层包裹的父节点，并设置其负margin，并设置 overflow: hidden：</p>
+            <br>
+            <div style="width: 100%; overflow: auto;">
+                <div class="margin-con test-con">
+                    <div class="test-container">
+                            <div class="margin-box"></div>
+                            <div class="margin-box"></div>
+                            <div class="margin-box"></div>
+                            <div class="margin-box"></div>
+                            <div class="margin-box"></div>
+                            <div class="margin-box"></div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+
+            <b>参考及扩展：</b>
+            <br><br>
+            <a class="color-main-fixed" target="blank" href="https://www.cnblogs.com/jscode/archive/2012/08/28/2660078.html">1-负值之美：负margin在页面布局中的应用</a>
+            <br><br>
+            <a class="color-main-fixed" target="blank" href="https://blog.csdn.net/MrLiber/article/details/98885764">2-使用css outline-offset 属性 实现加号</a>
+            <br><br>
+            <a class="color-main-fixed" target="blank" href="http://www.mamicode.com/info-detail-2234850.html">3-纯CSS制作各种各样的网页图标（三角形、暂停按钮、下载箭头、加号等）</a>
+            <br><br>
+            <a class="color-main-fixed" target="blank" href="https://www.zhangxinxu.com/wordpress/2019/06/cssconf-css-idea/">4-第五届CSS大会主题分享之CSS创意与视觉表现</a>
+        </p><br><br>
+    </div>
+</body>
+<script>
+    var clickTime = 0;
+    $('.click-btn').click(function() {
+        $('.hide').eq(clickTime).css('opacity', '1');
+        clickTime++;
+    });
+</script>
+</html>

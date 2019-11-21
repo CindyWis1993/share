@@ -1,0 +1,92 @@
+.turntableMain {
+    padding: 5em 0;
+    text-align: center;
+}
+
+.turntableCon {
+    position: relative;
+    margin: 5rem auto;
+    width: 37em;
+    height: 37em;
+}
+
+.turntable {
+    position: relative;
+    margin: 5rem auto;
+    width: 37em;
+    height: 37em;
+    border-radius: 100%;
+    list-style: none;
+    overflow: hidden;
+    transform: rotate(0deg);
+    background: #ddd;
+    display: block;
+}
+
+.turntable::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-position: center -6.5em;
+    opacity: 0;
+}
+
+.slice {
+    overflow: hidden;
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0% 100%;
+    transform: rotate(0deg) skewY(0deg);
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #fff;
+}
+
+.slice span {
+    position: absolute;
+    bottom: 4em;
+    left: 1em;
+    font-weight: bold;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.turntableArrow {
+    cursor: pointer;
+    position: absolute;
+    width: 6em;
+    height: 8em;
+    top: 50%;
+    left: 50%;
+    margin-top: -5em;
+    margin-left: -3em;
+    background-size: 100% 100%;
+    transform-origin: 50% 64%;
+}
+
+.alert {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+.alertBox {
+    width: 20em;
+    height: 10em;
+    background: #fff;
+    color: #000;
+    margin: 25em auto 0;
+    box-sizing: border-box;
+    padding: 3em 0;
+}

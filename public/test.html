@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=750,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
+    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
+    <link href="./css/share.css" rel="stylesheet">
+    <title>html2img</title>
+</head>
+
+<body>
+</body>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script>
+    const twoSumArr = (nums, target) => {
+        let resultNums = [];
+
+        for (const i in nums) {
+            const itemI = nums[i];
+            const def = target - itemI;
+
+            if (resultNums[def] !== undefined) {
+                return [resultNums[def], i];
+            }
+
+            resultNums[nums[i]] = i;
+        }
+    };
+
+    const twoSumObj = (nums, target) => {
+        let searchValues = {};
+
+        searchValues[target - nums[0]] = 0;
+
+        for (const i in nums) {
+            const itemI = nums[i];
+            let searchVal = target - itemI;
+
+            if (searchValues[itemI]) {
+                return [searchValues[itemI], i];
+            } else {
+                searchValues[searchVal] = i;
+            }
+        };
+    };
+
+    // 给定一个没有重复数字的序列，返回其所有可能的全排列
+    const permute = (nums) => {
+        let numsCo = [];
+
+        for (const i in nums) {
+            const numsResItem = [];
+
+            numsResItem.push(nums[i]);
+            numsCo.slice(1, nums.length);
+            console.log(numsResItem);
+        }
+
+        console.log(nums, numsCo);
+    };
+
+    twoSumArr([2, 7, 11, 15], 9);
+    permute([4, 5, 1]);
+</script>
+
+</html>

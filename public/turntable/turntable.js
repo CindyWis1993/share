@@ -1,48 +1,9 @@
-<!DOCTYPE HTML>
-<html lang="en">
-
-<head>
-    <meta name="viewport" content="width=750,user-scalable=no" />
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <link href="https://static.yyfax.com/yyfaxgroup/lib/yyui/css/index-17cea18009.min.css" rel="stylesheet">
-    <script src="https://static.yyfax.com/yyfax//lib/jquery/1.11.0/jquery.min.js"></script>
-    <link href="./css/turntable.css" rel="stylesheet">
-    <style class="turntableStyle"></style>
-    <title>转盘</title>
-</head>
-
-<body>
-    <div class="container">
-        <p class="h3 color-main-fixed text-center" style="padding-bottom: 20px;">转盘</p>
-        <div class="turntableMain border-shadow text-center">
-            <input type="number" class="turntableNum" placeholder="请输入转盘格数(≥3)" value="3" />
-            <button class="btn btn-default" onClick="turn('pan')">转盘转动</button>
-            <button class="btn btn-default" onClick="turn('arrow')">指针转动</button>
-            <button class="btn btn-default setTurntable">生成转盘</button>
-
-            <div class="turntableCon">
-                <ul class="turntable">
-                    <li class="slice"></li>
-                </ul>
-                <div class="turntableArrow"></div>
-            </div>
-
-            <div class="alert">
-                <div class="alertBox text-center">
-                    <p class="prizeText"></p>
-                    <button class="btn btn-default initTurntable">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-<script>
+$(() => {
     var $turntable = $('.turntable');
     var $turntableNum = $('.turntableNum');
     var $turntableBtn = $('.setTurntable');
     var $turntableArrow = $('.turntableArrow');
+    var $turnBtn = $('.btn-turn');
     var $alert = $('.alert');
     var $sureBtn = $('.initTurntable');
     var degObg = {};
@@ -61,6 +22,13 @@
     function turn(type) {
         turnType = type;
     }
+
+    $turnBtn.click((e) => {
+        var $this = $(e.currentTarget);
+        var btnType = $this.attr('data-type');
+
+        turn(btnType);
+    });
 
     $turntableBtn.click(() => {
         var turntableNum = $turntableNum.val();
@@ -100,36 +68,24 @@
             return;
         }
         btnFlag = true;
-        $style[0].innerHTML = '';
 
         if (turnType === 'pan') {
             var prizeId = parseInt(Math.random() * turntableNum);
             var rotateFinal = 360 * 5 + (360 - degObg[prizeId]) - 180 / turntableNum;
             turnTime = 2 / 3 * turntableNum;
-            var turntableStyle = `
-                .turntableAni {
-                    transition: all ${turnTime}s ease-out;
-                    transform: rotate(${rotateFinal}deg);
-                }`;
 
-            $style[0].type = 'text/css';
-            $style[0].innerHTML = turntableStyle;
-
-            $turntable.addClass('turntableAni');
+            $turntable.css({
+                transition: `all ${turnTime}s ease-out 0s`,
+                transform: `rotate(${rotateFinal}deg)`
+            });
         } else {
             var prizeId = parseInt(Math.random() * turntableNum);
             var rotateFinal = 360 * 5 + degObg[prizeId] + 180 / turntableNum;
             turnTime = 2 / 8 * turntableNum < 2 ? 2 : 2 / 8 * turntableNum;
-            var turntableStyle = `
-                .turntableAni {
-                    transition: all ${turnTime}s ease-out;
-                    transform: rotate(${rotateFinal}deg);
-                }`;
-
-            $style[0].type = 'text/css';
-            $style[0].innerHTML = turntableStyle;
-
-            $turntableArrow.addClass('turntableAni');
+            $turntableArrow.css({
+                transition: `all ${turnTime}s ease-out 0s`,
+                transform: `rotate(${rotateFinal}deg)`
+            });
         }
 
         setTimeout(() => {
@@ -141,12 +97,15 @@
     $sureBtn.click(() => {
         btnFlag = false;
         $alert.hide();
-        $style[0].innerHTML = '';
-        $turntable.removeClass('turntableAni');
-        $turntableArrow.removeClass('turntableAni');
+        $turntable.css({
+            transition: `all 0s ease-out 0s`,
+            transform: `rotate(0deg)`
+        });
+        $turntableArrow.css({
+            transition: `all 0s ease-out 0s`,
+            transform: `rotate(0deg)`
+        });
     });
 
     $turntableBtn.click();
-</script>
-
-</html>
+});

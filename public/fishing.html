@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>夏日狂欢 钓出惊喜</title>
+    <link rel="stylesheet" type="text/css" href="./css/fishing.css">
+</head>
+
+<body>
+    <input type="hidden" id="staticDomain" name="staticDomain" value="{{config.staticDomain}}">
+
+    <div class="fishing-game">
+        <!-- 游戏预加载　-->
+        <div id="sourceLoading">
+            <div class="bar_box">
+                <p id="start-tip">正在加载游戏，请稍后......</p>
+                <div class="bar_bg">
+                    <div class="bar">
+                        <i class="gameIcon"></i>
+                    </div>
+                </div>
+                <p id="load_txt">0 %</p>
+            </div>
+        </div>
+        <div class="sky-bg"></div>
+        <!-- 游戏主页 -->
+        <div class="game-container game-page init-bg">
+            <!-- 游戏前景元素 -->
+            <div class="pre-items">
+                <div id="bubbles" class="bubbles">
+                </div>
+                <div class="common-imageX seaweed-1"></div>
+                <div class="common-imageX coral-1"></div>
+                <canvas id="seaGrass" class="seaweed-2"></canvas>
+                <div class="common-imageX seaweed-3">
+                    <div class="common-position wave-center"></div>
+                    <div class="common-position wave-left"></div>
+                    <div class="common-position wave-right"></div>
+                </div>
+
+                <div class="common-imageX stone-1"></div>
+                <div class="common-imageX stone-2"></div>
+                <div class="common-imageX coral-2"></div>
+                <div class="common-imageX shell"></div>
+
+                <div class="common-imageX coral-3"></div>
+                <div class="common-imageX starfish"></div>
+                <div class="common-imageX coral-4"></div>
+                <div class="common-imageX coral-5"></div>
+
+                <div class="common-imageX shadow"></div>
+            </div>
+
+            <!-- 游戏准备页 -->
+            <div class="prepare-page">
+                <div class="main-title"></div>
+                <div class="common-imageX goto-game"></div>
+                <div class="game-rules">
+                    游戏规则
+                    <img class="icon-left" src="../fishing/rules-icon.png">
+                    <img class="line-bottom" src="../fishing/rules-line.png">
+                </div>
+            </div>
+
+            <!-- 游戏画布 -->
+            <div class="game-main">
+                <div class="game-left-con">
+                    <div class="left-box chance-box">
+                        剩余游戏次数
+                        <div class="chance-heart"></div>
+                        <div class="chance-heart"></div>
+                        <div class="chance-heart"></div>
+                        <div class="chance-heart"></div>
+                        <div class="chance-heart"></div>
+                        <div class="chance-heart"></div>
+                    </div>
+                    <div id="prizeInfo" class="left-box prize-info">
+                        <div id="prizeScrollArea" class="prize-info-window prize-scroll-area"></div>
+                        <div id="prizeInfoCopy" class="prize-info-copy"></div>
+                    </div>
+
+                    <div class="left-box time-box">
+                        <div class="time-bar"></div>
+                        <div class="time-text">40秒</div>
+                        <div class="time-tip">+10秒</div>
+                    </div>
+                    <div class="goal-tip">+10分</div>
+                </div>
+                <canvas id="canvas"></canvas>
+            </div>
+
+            <!-- 游戏画布-最外层图标 -->
+            <div class="game-btn">
+                <canvas id="btnCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- 弹框遮罩 -->
+        <div class="mask"></div>
+        <div class="share-mask">
+            <div class="share-guide"></div>
+        </div>
+        <p class="common-imageX game-tip"></p>
+
+        <!-- 通用弹框 -->
+        <div class="pop common-pop">
+            <span class="box-bg btn close-btn top-close"></span>
+            <div class="common-imageX box-img-left"></div>
+            <div class="common-imageX box-img-right"></div>
+            <p class="pop-title lose-title">
+                <span class="title-text"></span>
+            </p>
+            <div class="pop-text common-text"></div>
+            <span class="pop-btn mid-btn"></span>
+            <span class="pop-btn left-btn"></span>
+            <span class="pop-btn right-btn"></span>
+        </div>
+
+        <!-- 其他弹框 -->
+        <div class="pop other-pop">
+
+            <!-- 游戏规则 -->
+            <div class="other-box rules-box">
+                <p class="box-bg btn close-btn top-close"></p>
+                <p class="rules-title">
+                    <span class="long-box-title-text rules-title-text">游戏规则</span>
+                </p>
+                <div class="rules-detail">
+                    <div class="rules-scroll" id="scrollCon">
+                        <div class="rules-page rules-pageOne block">
+                            <p class="rules-text">
+                                <span class="rules-num">1.</span>
+                                活动时间：2018年8月20日-8月31日;
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">2.</span>
+                                活动期间一共放出
+                                <span class="rules-high-light">50000份现金</span>、积分和加息Ycode作为抽奖奖品；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">3.</span>
+                                现金奖励将在活动结束后2个工作日内统一发放至存管账户；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">4.</span>
+                                用户需开通存管账户才能获得现金奖励，新开通存管账户的现金奖励将在2个工作日内发放；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">5.</span>
+                                活动期间，单笔出借每满4千元获赠1次钓鱼机会（仅限出借YY-X/YY-N/YY-A/YY-B/YY-C/YY-VIPA/YY-VIPB/YY-VIPC的金额才纳入奖励的统计范围），到期成功续投出去的用户可增加相应的钓鱼机会；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">6.</span>
+                                活动期间，每天登录、分享和出借自动投标服务均可获得钓鱼机会，每人每天最多获得6次钓鱼机会；
+                            </p>
+                        </div>
+
+                        <div class="rules-page rules-pageTwo block">
+                            <div class="rules-tableCon">
+                                <table class="rules-table">
+                                    <tbody>
+                                        <tr>
+                                            <td width='25'>登录</td>
+                                            <td width='20'>APP或
+                                                <br>微信分享</td>
+                                            <td width='55'>
+                                                <p class="table-p left-table">N=</p>
+                                                <p class="table-p right-table">
+                                                    <span class="span-top">单笔出借额</span>
+                                                    <span>4000</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="rules-high-light">2次
+                                                    <br>机会</span>
+                                            </td>
+                                            <td>+1次机会
+                                                <br>(每天限1次)</td>
+                                            <td>
+                                                <span class="rules-high-light">+N次机会</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="rules-text">
+                                <span class="rules-num">7.</span>
+                                每局游戏时间内游戏分数达到40分，可获得一次抽奖机会；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">8.</span>
+                                游戏机会仅当日有效，请及时使用；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">9.</span>
+                                活动期间累计获得总分数最多的前10名用户，
+                                <span class="rules-high-light">在活动结束后获得额外现金奖励</span>；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">10.</span>
+                                排行榜每5分钟更新一次；
+                            </p>
+                            <p class="rules-text">
+                                <span class="rules-num">11.</span>
+                                本活动最终解释权归友金服所有。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="common-imageX rules-arrow arrow-down"></div>
+            </div>
+
+            <!-- 玩法说明 -->
+            <div class="other-box about-box">
+                <p class="box-bg btn close-btn top-close"></p>
+                <div class="common-imageX box-img-left"></div>
+                <div class="common-imageX box-img-right"></div>
+                <p class="about-title">
+                    <span class="long-box-title-text about-title-text">玩法说明</span>
+                </p>
+                <div class="about-page">
+                    <p class="about-text">
+                        <span class="about-num">1.</span>
+                        每局游戏时间：40秒
+                    </p>
+                    <div class="about-text">
+                        <span class="about-num">2.</span>
+                        鱼钩有规律摇摆，点击海平面以下区域释放鱼钩钓鱼：
+                        <div class="about-tableCon">
+                            <table class="about-table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="common-imageX about-icon whale"></div>
+                                        </td>
+                                        <td>
+                                            <div class="common-imageX about-icon clown"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>鲸鱼
+                                            <span class="rules-high-add">+10</span>分</td>
+                                        <td>小丑鱼
+                                            <span class="rules-high-add">+5</span>分</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="common-imageX about-icon butterfly"></div>
+                                        </td>
+                                        <td>
+                                            <div class="common-imageX about-icon seaSnake"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>蝴蝶鱼
+                                            <span class="rules-high-add">+3</span>分</td>
+                                        <td>海蛇
+                                            <span class="rules-high-minus">-8</span>分</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <p class="about-text">
+                        <span class="about-num">3.</span>
+                        海底中有宝箱，钓到宝箱当局游戏时间+10秒
+                    </p>
+                    <p class="about-text">
+                        <span class="about-num">4.</span>
+                        每局游戏时间内分数达到40分可获得1次抽奖机会
+                    </p>
+                </div>
+                <div class="pop-btn mid-btn close-btn">确定</div>
+            </div>
+
+            <!-- 排行榜 -->
+            <div class="other-box rank-box">
+                <p class="box-bg btn close-btn top-close"></p>
+                <div class="rank-title">
+                    <div class="rank-title-box">
+                        <span class="rank-title-img"></span>
+                        <span class="rank-title-text">冲榜赢现金</span>
+                    </div>
+                </div>
+                <div class="rank-con">
+                    <table class="rank-table">
+                        <tbody>
+                            <tr class="rank-th-tr">
+                                <th class="rank-th rank-th-1">排名</th>
+                                <th class="rank-th rank-th-2">用户名</th>
+                                <th class="rank-th rank-th-3">总得分</th>
+                            </tr>
+                            <tr class="rank-tr rank-self"> </tr>
+                        </tbody>
+                    </table>
+                    <span class="rank-span rank-self">立刻开始游戏，冲榜赢现金~</span>
+                </div>
+                <div class="rank-tip">
+                    注：排行榜每5分钟更新一次
+                </div>
+            </div>
+
+            <!-- 奖品纪录 -->
+            <div class="other-box reward-box">
+                <p class="box-bg btn close-btn top-close"></p>
+                <div class="reward-title">
+                    <div class="reward-title-box">
+                        <span class="reward-title-img"></span>
+                        <span class="reward-title-text">中奖纪录</span>
+                    </div>
+                </div>
+                <div class="record-detail record-scroll-area">
+                    <ul class="record-scroller">
+                    </ul>
+                </div>
+                <div class="common-imageX reward-arrow arrow-down" style="display: none"></div>
+            </div>
+        </div>
+
+        <!-- 其他加载效果 -->
+        <div class="ajaxLoading">
+            <div class="loading-bg">
+                <div class="loading">
+                    <div class="loading-runner"></div>
+                </div>
+                <div class="loading-icon"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/transformjs/transform.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/alloyTouch/alloy_touch.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/js-md5/md5.min.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/createjs/preloadjs-0.6.2.min.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/createjs/easeljs-0.8.2.min.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/createjs/tweenjs-0.6.2.min.js"></script>
+    <script type="text/javascript" src="https://static.yyfax.com/yyfax/lib/createjs/soundjs-0.6.2.min.js"></script>
+    <script type="text/javascript" type="text/javascript">
+        if (navigator.userAgent.indexOf('yyfax') > -1) {
+            document.write('<script src="https://static.yyfax.com/yyfax/lib/app/AppJsBridge.js"><\/script>');
+        }
+        if (/MicroMessenger/i.test(navigator.userAgent)) {
+            document.write('<script src="https://static.yyfax.com/yyfax/lib/wechat/jweixin-1.0.0.js"><\/script>');
+        }
+    </script>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="./built/public/ts/fishingGame.js"></script> -->
+</body>
+
+</html>
